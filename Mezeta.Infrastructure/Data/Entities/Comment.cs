@@ -16,6 +16,6 @@ namespace Mezeta.Infrastructure.Data.Entities
         [ForeignKey(nameof(User))]
         public string UserId { get; set; } = null!;
 
-        public IdentityUser User { get; set; } = null!;
+        public User User { get; set; } = null!;
     }
 }

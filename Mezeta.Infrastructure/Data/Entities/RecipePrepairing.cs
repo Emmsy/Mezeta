@@ -33,5 +33,11 @@ namespace Mezeta.Infrastructure.Data.Entities
         public double ExpectedQuantity { get; set; }
 
 
+        [ForeignKey(nameof(User))]
+        public string UserId { get; set; } = null!;
+
+        public User User { get; set; } = null!;
+
+
     }
 }
