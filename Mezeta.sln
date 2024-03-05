@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mezeta", "Mezeta\Mezeta.csproj", "{DC966D6B-869D-4DF8-98D2-393B5C873126}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mezeta.Infrastructure", "Mezeta.Infrastructure\Mezeta.Infrastructure.csproj", "{FA57A231-1F2C-4671-880D-E641410EEEAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mezeta.Core", "Mezeta.Core\Mezeta.Core.csproj", "{CC4853E8-D01A-451C-BDC8-1630CF11FAE2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC966D6B-869D-4DF8-98D2-393B5C873126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC966D6B-869D-4DF8-98D2-393B5C873126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC966D6B-869D-4DF8-98D2-393B5C873126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC966D6B-869D-4DF8-98D2-393B5C873126}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA57A231-1F2C-4671-880D-E641410EEEAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA57A231-1F2C-4671-880D-E641410EEEAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA57A231-1F2C-4671-880D-E641410EEEAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA57A231-1F2C-4671-880D-E641410EEEAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC4853E8-D01A-451C-BDC8-1630CF11FAE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC4853E8-D01A-451C-BDC8-1630CF11FAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC4853E8-D01A-451C-BDC8-1630CF11FAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC4853E8-D01A-451C-BDC8-1630CF11FAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E53C34BE-2A69-4B06-B47B-C4C41B335D92}
+	EndGlobalSection
+EndGlobal
