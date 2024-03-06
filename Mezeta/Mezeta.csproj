@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mezeta.Infrastructure\Mezeta.Infrastructure.csproj" />
+    <ProjectReference Include="..\Mezeta.Core\Mezeta.Core.csproj" />
   </ItemGroup>
 
 </Project>

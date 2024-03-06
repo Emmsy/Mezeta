@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mezeta.Infrastructure\Mezeta.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
