@@ -1,3 +1,5 @@
+using Mezeta.Core.Contracts;
+using Mezeta.Core.Services;
 using Mezeta.Infrastructure.Data.Entities;
 using Mezeta.Infrastrucute.Data;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +19,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
