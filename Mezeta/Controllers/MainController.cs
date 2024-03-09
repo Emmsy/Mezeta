@@ -1,4 +1,5 @@
 ﻿using Mezeta.Core.Contracts;
+using Mezeta.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,9 +25,10 @@ namespace Mezeta.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public IActionResult All()
         {
-            var allRecipies = recipeService.GetAllRecipes();
+            var allRecipies =   recipeService.GetAllRecipes();
+
             return View(allRecipies);
         }
 
@@ -35,9 +37,18 @@ namespace Mezeta.Controllers
         //    return View();
         //}
 
+
+        [HttpGet]
         public IActionResult Add()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(RecipeViewModel model)
+        {
+
+            return View(model);
         }
 
         public IActionResult Edit()
