@@ -8,6 +8,6 @@ namespace Mezeta.Core.Constants
 {
     public static class RecipeMessage
     {
-        public const string LengthError = "Дължионата трябва да е между {2} и {1} знака";
+        public const string LengthError = "Дължината трябва да е между {2} и {1} знака";
     }
 }

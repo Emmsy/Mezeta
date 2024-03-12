@@ -20,11 +20,10 @@ namespace Mezeta.Core.Services
            data = _data;
         }
 
-        public  List<RecipeViewModel> GetAllRecipes()
-        
+        public async Task <IEnumerable<RecipeViewModel>> GetAllRecipes()
         {
 
-            var result =  data.Recipes.Select(d=> new RecipeViewModel()
+            var result =  await data.Recipes.Select(d=> new RecipeViewModel()
             {
                 Id = d.Id,
                 Name = d.Name,
@@ -43,7 +42,7 @@ namespace Mezeta.Core.Services
                     UnitOfMeasure = s.UnitOfMeasure
                 }).ToList()
 
-            }).ToList();
+            }).ToListAsync();
 
             return result;
         }

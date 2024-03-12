@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mezeta.Core.Constants;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Mezeta.Core.Models
     public class RecipeSpiceViewModel
     {
         [Required]
+        [StringLength(100,ErrorMessage =RecipeMessage.LengthError,MinimumLength =4)]
         public string Name { get; set; }
 
         [Required]
