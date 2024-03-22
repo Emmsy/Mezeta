@@ -22,9 +22,11 @@ builder.Services.AddDefaultIdentity<User>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
 })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
+builder.Services.AddResponseCaching();
 
 
 var app = builder.Build();

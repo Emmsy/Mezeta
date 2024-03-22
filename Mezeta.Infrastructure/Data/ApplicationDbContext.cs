@@ -15,6 +15,7 @@ namespace Mezeta.Infrastrucute.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new MeasureConfiguration());
             builder.ApplyConfiguration(new IngredientConfiguration());
             builder.ApplyConfiguration(new SpiceConfiguration());
