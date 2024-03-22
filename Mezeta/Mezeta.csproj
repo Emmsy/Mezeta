@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Mezeta.Core\Mezeta.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
 </Project>

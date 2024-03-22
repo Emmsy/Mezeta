@@ -11,7 +11,7 @@ namespace Mezeta.Core.Models
     {
 
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
         public double Quantity { get; set; }

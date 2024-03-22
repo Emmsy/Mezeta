@@ -38,23 +38,7 @@ namespace Mezeta.Controllers
         //}
 
 
-        [HttpGet]
-        public IActionResult Add()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Add(RecipeViewModel model)
-        {
-
-            return View(model);
-        }
-
-        public IActionResult Edit()
-        {
-            return View();
-        }
+       
 
         public IActionResult Calculation()
         {
