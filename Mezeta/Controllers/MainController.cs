@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Mezeta.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class MainController : Controller
     {
         private readonly IRecipeService recipeService;
@@ -17,7 +17,7 @@ namespace Mezeta.Controllers
         }
 
         [HttpGet]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();

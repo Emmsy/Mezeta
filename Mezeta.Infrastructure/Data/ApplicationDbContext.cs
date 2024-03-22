@@ -15,6 +15,7 @@ namespace Mezeta.Infrastrucute.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new MeasureConfiguration());
             builder.ApplyConfiguration(new IngredientConfiguration());
             builder.ApplyConfiguration(new SpiceConfiguration());
             builder.ApplyConfiguration(new RecipeIngredientConfiguration());
@@ -30,5 +31,6 @@ namespace Mezeta.Infrastrucute.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<RecipePrepairing> RecipesPrepairings { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Measure> Measures { get; set; }
     }
 }

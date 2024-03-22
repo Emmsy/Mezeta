@@ -21,7 +21,7 @@ namespace Mezeta.Infrastructure.Data.Configuration
                   Id = 1,
                   IngredientId = 1,
                   Quantity = 600,
-                  UnitOfMeasure="g/kg"
+                  MeasureId = 1,
                 },
 
                 new RecipeIngredient()
@@ -29,7 +29,7 @@ namespace Mezeta.Infrastructure.Data.Configuration
                   Id = 2,
                   IngredientId = 2,
                   Quantity = 400,
-                  UnitOfMeasure="g/kg"
+                  MeasureId = 1,
 
                 },
             };

@@ -33,13 +33,13 @@ namespace Mezeta.Core.Services
                 {
                     Name = i.Ingredient.Name,
                     Quantity = i.Quantity,
-                    UnitOfMeasure = i.UnitOfMeasure,
+                    MeasureId = i.MeasureId,
                 }).ToList(),
                 Spices = d.Spices.Select(s => new RecipeSpiceViewModel()
                 {
                     Name = s.Spice.Name,
                     Quantity = s.Quantity,
-                    UnitOfMeasure = s.UnitOfMeasure
+                    MeasureId=s.MeasureId
                 }).ToList()
 
             }).ToListAsync();

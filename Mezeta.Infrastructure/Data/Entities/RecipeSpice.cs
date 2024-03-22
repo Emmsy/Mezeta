@@ -21,7 +21,9 @@ namespace Mezeta.Infrastructure.Data.Entities
         public double Quantity { get; set; }
 
         [Required]
-        [StringLength(8)]
-        public string UnitOfMeasure { get; set; } = null!;
+        [ForeignKey(nameof(Measure))]
+        public int MeasureId { get; set; }
+
+        public Measure UnitOfMeasure { get; set; } = null!;
     }
 }
