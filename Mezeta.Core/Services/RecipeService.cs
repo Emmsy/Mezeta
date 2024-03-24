@@ -47,15 +47,17 @@ namespace Mezeta.Core.Services
             return result;
         }
 
-        public Task<IEnumerable<RecipeViewModel>> GetAllSpices()
+        public Task<IEnumerable<RecipeSpiceViewModel>> GetAllSpices()
         {
             throw new NotImplementedException();
         }
 
 
-        public Task<IEnumerable<RecipeViewModel>> GetAllIngredients()
+        public Task<IEnumerable<RecipeIngredientViewModel>> GetAllIngredients()
         {
             throw new NotImplementedException();
         }
+
+   
     }
 }

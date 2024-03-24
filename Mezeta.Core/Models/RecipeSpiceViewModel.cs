@@ -18,7 +18,8 @@ namespace Mezeta.Core.Models
         public double Quantity { get; set; }
 
         [Required]
-
         public int MeasureId { get; set; }
+
+
     }
 }
