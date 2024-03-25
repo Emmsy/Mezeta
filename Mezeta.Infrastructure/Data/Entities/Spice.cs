@@ -16,7 +16,7 @@ namespace Mezeta.Infrastructure.Data.Entities
         public string Description { get; set; } = null!;
 
         [StringLength(500)]
-        public string ImageUrl { get; set; } = null!;
+        public string? ImageUrl { get; set; } = null!;
         
     }
 }

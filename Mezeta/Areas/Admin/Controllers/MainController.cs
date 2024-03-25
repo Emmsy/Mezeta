@@ -1,7 +1,10 @@
 ﻿using Mezeta.Core.Contracts;
+using Mezeta.Core.Contracts.Admin;
 using Mezeta.Core.Models;
+using Mezeta.Core.Models.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Mezeta.Areas.Admin.Controllers
 {
@@ -9,11 +12,13 @@ namespace Mezeta.Areas.Admin.Controllers
     public class MainController : BaseController
     {
         private readonly IRecipeService recipeService;
+        private readonly IAdminRecipeService adminRecipeService;
 
 
-        public MainController(IRecipeService _recipeService)
+        public MainController(IRecipeService _recipeService, IAdminRecipeService _adminRecipeService)
         {
             recipeService = _recipeService;
+            adminRecipeService = _adminRecipeService;
         }
 
         [HttpGet]
@@ -32,6 +37,7 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddRecipe(RecipeViewModel model)
         {
+
 
             return View(model);
         }
@@ -52,14 +58,22 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult AddSpice()
         {
-            return View();
+            var model = new IngredientSpiceAddModel();
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult AddSpice(RecipeSpiceViewModel model)
+        public async Task<IActionResult> AddSpice(IngredientSpiceAddModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-            return View(model);
+            await adminRecipeService.AddSpice(model);
+
+            //return RedirectToAction("AllSpices", "Admin", new {area="Admin"});
+            return RedirectToAction("Index","Home", new {area="Home"});
         }
 
 

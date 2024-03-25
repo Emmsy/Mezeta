@@ -27,7 +27,7 @@ namespace Mezeta.Infrastructure.Data.Entities
         public IEnumerable<Comment> Comments { get; set; }
 
         [StringLength(500)]
-        public string ImageUrl { get; set; } = null!;
+        public string? ImageUrl { get; set; } = null!;
 
     }
 }

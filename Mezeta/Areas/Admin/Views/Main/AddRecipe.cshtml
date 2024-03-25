@@ -22,14 +22,17 @@
                 <span asp-validation-for="ImageUrl" class="small text-danger"></span>
             </div>
 
+
+            <partial name="_IngredietsPartial.cshtml"/>
+          
+
             <div class="form-group">
                 <label asp-for="Description"></label>
                 <textarea asp-for="Description" rows="4" class="form-control" placeholder="Two bedrooms..."></textarea>
                 <span asp-validation-for="Description" class="small text-danger"></span>
             </div>
 
-       
-          
+
 
             <div class="text-center">
                 <input class="btn btn-primary mt-3" type="submit" value="Save" />

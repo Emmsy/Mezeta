@@ -26,9 +26,17 @@ namespace Mezeta.Core.Services.Admin
             throw new NotImplementedException();
         }
 
-        public Task AddIngredient(IngredientSpiceAddModel ingredient)
+        public async Task AddIngredient(IngredientSpiceAddModel ingredient)
         {
-            throw new NotImplementedException();
+            var crtingredient = new Ingredient()
+            {
+                Name = ingredient.Name,
+                Description = ingredient.Description,
+                ImageUrl = ingredient.ImageUrl,
+            };
+
+            await data.AddAsync(crtingredient);
+            await data.SaveChangesAsync();
         }
 
  

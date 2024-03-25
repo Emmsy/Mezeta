@@ -1,6 +1,8 @@
 
 using Mezeta.Core.Contracts;
+using Mezeta.Core.Contracts.Admin;
 using Mezeta.Core.Services;
+using Mezeta.Core.Services.Admin;
 using Mezeta.Infrastructure.Data.Entities;
 using Mezeta.Infrastrucute.Data;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +28,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
+builder.Services.AddScoped<IAdminRecipeService, AdminRecipeService>();
 builder.Services.AddResponseCaching();
 
 
