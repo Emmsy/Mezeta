@@ -23,28 +23,29 @@ namespace Mezeta.Core.Services
         public async Task <IEnumerable<RecipeViewModel>> GetAllRecipes()
         {
 
-            var result =  await data.Recipes.Select(d=> new RecipeViewModel()
-            {
-                Id = d.Id,
-                Name = d.Name,
-                Description = d.Description,
-                ImageUrl = d.ImageUrl,
-                Ingredients = d.Ingredients.Select(i => new RecipeIngredientViewModel()
-                {
-                    Name = i.Ingredient.Name,
-                    Quantity = i.Quantity,
-                    MeasureId = i.MeasureId,
-                }).ToList(),
-                Spices = d.Spices.Select(s => new RecipeSpiceViewModel()
-                {
-                    Name = s.Spice.Name,
-                    Quantity = s.Quantity,
-                    MeasureId=s.MeasureId
-                }).ToList()
+            //var result =  await data.Recipes.Select(d=> new RecipeViewModel()
+            //{
+            //    Id = d.Id,
+            //    Name = d.Name,
+            //    Description = d.Description,
+            //    ImageUrl = d.ImageUrl,
+            //    Ingredients = d.Ingredients.Select(i => new RecipeIngredientViewModel()
+            //    {
+            //        Name = i.Ingredient.Name,
+            //        Quantity = i.Quantity,
+            //        MeasureId = i.MeasureId,
+            //    }).ToList(),
+            //    Spices = d.Spices.Select(s => new RecipeSpiceViewModel()
+            //    {
+            //        Name = s.Spice.Name,
+            //        Quantity = s.Quantity,
+            //        MeasureId=s.MeasureId
+            //    }).ToList()
 
-            }).ToListAsync();
+            //}).ToListAsync();
 
-            return result;
+            //return result;
+            throw new NotImplementedException();
         }
 
         public Task<IEnumerable<RecipeSpiceViewModel>> GetAllSpices()

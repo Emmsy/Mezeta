@@ -11,32 +11,32 @@
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form method="post">
             <div class="form-group">
-                <label asp-for="Name"></label>
+                <label asp-for="Name">Загрлавие</label>
                 <input asp-for="Name" class="form-control" placeholder="Заглавие на рецептата...">
                 <span asp-validation-for="Name" class="small text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="ImageUrl"></label>
-                <input asp-for="ImageUrl" class="form-control" placeholder="Your fine URL here...">
+                <label asp-for="ImageUrl">Снимка</label>
+                <input asp-for="ImageUrl" class="form-control" placeholder="URL снимка...">
                 <span asp-validation-for="ImageUrl" class="small text-danger"></span>
             </div>
 
+            <div class="card mb-3">
+                <div class="btn-group" role="group" @* aria-label="Basic outlined example" *@>
+                    <a asp-area="Admin" asp-controller="Main" asp-action="AddListIngredient" class="btn btn-outline-primary">Добави продуктите за рецептата</a>
+                    <a asp-area="Admin" asp-controller="Main" asp-action="AddListSpice" class="btn btn-outline-primary">Добави подправките за рецептата</a>
+                </div>
 
-            <partial name="_IngredietsPartial.cshtml"/>
+            <partial name="_IngredietsPartial"/>
           
 
             <div class="form-group">
                 <label asp-for="Description"></label>
-                <textarea asp-for="Description" rows="4" class="form-control" placeholder="Two bedrooms..."></textarea>
+                <textarea asp-for="Description" rows="4" class="form-control" placeholder="Описание..."></textarea>
                 <span asp-validation-for="Description" class="small text-danger"></span>
             </div>
-
-
-
-            <div class="text-center">
-                <input class="btn btn-primary mt-3" type="submit" value="Save" />
-            </div>
+ 
         </form>
     </div>
 </div>
@@ -44,4 +44,6 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
-}
+} <div class="text-center">
+    <input class="btn btn-primary mt-3" type="submit" value="Save" />
+</div>

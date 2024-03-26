@@ -5,18 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mezeta.Core.Models
+namespace Mezeta.Core.Models.Admin
 {
-    public class RecipeIngredientViewModel
+    public class AddedIngredientModel
     {
 
-        [Required]
-        public int IngredientId { get; set; }
+        public string IngredientName{ get; set; } 
 
-        [Required]
         public double Quantity { get; set; }
 
-        [Required]
-        public int MeasureId { get; set; } 
+        public string MeasureName { get; set; } 
     }
 }

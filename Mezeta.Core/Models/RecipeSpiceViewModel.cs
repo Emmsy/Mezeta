@@ -11,8 +11,7 @@ namespace Mezeta.Core.Models
     public class RecipeSpiceViewModel
     {
         [Required]
-        [StringLength(100,ErrorMessage =RecipeMessage.LengthError,MinimumLength =4)]
-        public string Name { get; set; }
+        public int SpiceId { get; set; }
 
         [Required]
         public double Quantity { get; set; }
