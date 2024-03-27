@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mezeta.Core.Models.Admin;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,10 +14,14 @@ namespace Mezeta.Core.Models
         [Required]
         public int IngredientId { get; set; }
 
+        public string? IngredientName { get; set; }
+
         [Required]
         public double Quantity { get; set; }
 
         [Required]
-        public int MeasureId { get; set; } 
+        public int MeasureId { get; set; }
+
+        public string? MeasureUnit { get; set; }
     }
 }

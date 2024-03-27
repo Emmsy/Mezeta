@@ -10,12 +10,7 @@ namespace Mezeta.Core.Models
 {
     public class RecipeViewModel
     {
-        //public RecipeViewModel()
-        //{
-        //    Ingredients = new List<RecipeIngredientViewModel>();
-        //    Spices = new List<RecipeSpiceViewModel>();
-        //}
-
+    
         [Required]
         public int Id { get; set; }
 
@@ -32,6 +27,6 @@ namespace Mezeta.Core.Models
         //public IEnumerable<Comment> Comments { get; set; }
 
         [StringLength(500, ErrorMessage = RecipeMessage.LengthError, MinimumLength = 4)]
-        public string ImageUrl { get; set; } = null!;
+        public string? ImageUrl { get; set; } 
     }
 }

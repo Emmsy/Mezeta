@@ -26,5 +26,6 @@ namespace Mezeta.Core.Contracts.Admin
 
         Task<string> GetMeasureName(int id);
         Task<string> GetIngredientName(int id);
+        Task<string> GetSpiceName(int id);
     }
 }

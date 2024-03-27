@@ -21,9 +21,54 @@ namespace Mezeta.Core.Services.Admin
             data = _data;
         }
 
-        public Task AddRecipes(RecipeViewModel recipe)
+        /// <summary>
+        /// Добавя рецепта в базата
+        /// </summary>
+        /// <param name="recipe"></param>
+        /// <returns></returns>
+        public async Task AddRecipes(RecipeViewModel recipe)
         {
-            throw new NotImplementedException();
+
+            var crtIngredients = new List<RecipeIngredient>();
+            var crtSpices = new List<RecipeSpice>();
+
+            foreach (var ing in recipe.Ingredients)
+            {
+                var crtIngredient = new RecipeIngredient()
+                {
+                    IngredientId = ing.IngredientId,
+                    MeasureId = ing.MeasureId,
+                    Quantity = ing.Quantity,
+                };
+                crtIngredients.Add(crtIngredient);
+            }
+
+
+            foreach (var sp in recipe.Spices)
+            {
+                var crtSpice = new RecipeSpice()
+                {
+                    SpiceId = sp.SpiceId,
+                    MeasureId = sp.MeasureId,
+                    Quantity = sp.Quantity,
+                };
+                crtSpices.Add(crtSpice);
+
+            }
+
+            var crtRecipe = new Recipe()
+            {
+                Name = recipe.Name,
+                Description = recipe.Description,
+                ImageUrl = recipe.ImageUrl,
+                Ingredients = crtIngredients,
+                Spices = crtSpices,
+                Comments = new List<Comment>(),
+
+            };
+
+            await data.Recipes.AddAsync(crtRecipe);
+            await data.SaveChangesAsync();
         }
 
 
@@ -106,6 +151,12 @@ namespace Mezeta.Core.Services.Admin
         public async Task<string> GetIngredientName(int id)
         {
             var name = await data.Ingredients.Where(d => d.Id == id).Select(d => d.Name).FirstOrDefaultAsync() ?? string.Empty;
+            return name;
+        }
+
+        public async Task<string> GetSpiceName(int id)
+        {
+            var name = await data.Spices.Where(d => d.Id == id).Select(d => d.Name).FirstOrDefaultAsync() ?? string.Empty;
             return name;
         }
     }

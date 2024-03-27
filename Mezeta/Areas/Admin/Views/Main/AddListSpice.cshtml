@@ -1,19 +1,19 @@
-﻿@model IngredientViewModel
+﻿@model SpiceViewModel
 
 
 <div class="form-group">
     <form class="input-group-sm" asp-area="Admin" asp-controller="Main"
-          asp-action="AddListIngredient" asp-route-id="" method="post">
+          asp-action="AddListSpice" asp-route-id="" method="post">
 
-        <label asp-for="IngredientId">Изберете продукт</label>
-        <select asp-for="IngredientId" class="form-control">
-            @foreach (var ing in Model.Ingredients)
+        <label asp-for="SpiceId">Изберете продукт</label>
+        <select asp-for="SpiceId" class="form-control">
+            @foreach (var sp in Model.Spices)
             {
-                <option value="@ing.Id">@ing.Name</option>
+                <option value="@sp.Id">@sp.Name</option>
             }
 
         </select>
-        <span asp-validation-for="IngredientId" class="small text-danger"></span>
+        <span asp-validation-for="SpiceId" class="small text-danger"></span>
 
 
         <div class="form-group">
@@ -22,7 +22,7 @@
             <span asp-validation-for="Quantity" class="small text-danger"></span>
         </div>
 
-        <label asp-for="IngredientId">Мярка</label>
+        <label asp-for="SpiceId">Мярка</label>
         <select asp-for="MeasureId" class="form-control">
             @foreach (var measure in Model.Measures)
             {
@@ -38,17 +38,17 @@
 
     </form>
 
-    @if (Model.AddedIngredients.Any())
+    @if (Model.AddedSpices.Any())
     {
-        <h3>Добавени продукти!</h3>
+        <h3>Добавени подправки!</h3>
         <form class="input-group-sm" asp-area="Admin" asp-controller="Main"
           asp-action="AddRecipe" asp-route-id="" method="get">
-        @foreach (var msg in Model.AddedIngredients)
+        @foreach (var msg in Model.AddedSpices)
         {
             <div class="card">
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                        <p>@msg.IngredientName @msg.Quantity @msg.MeasureUnit</p>                    
+                        <p>@msg.SpiceName @msg.Quantity @msg.MeasureUnit</p>                    
                     </blockquote>
                 </div>
             </div>
@@ -61,7 +61,7 @@
     }
     else
     {
-        <h3>Няма добавени продукти</h3>
+        <h3>Няма добавени подправки</h3>
     }
 
 
