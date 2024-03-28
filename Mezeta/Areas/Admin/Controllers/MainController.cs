@@ -12,12 +12,15 @@ namespace Mezeta.Areas.Admin.Controllers
     public class MainController : BaseController
     {
         private readonly IAdminRecipeService adminRecipeService;
+        private readonly IRecipeService recipeService;
         private static List<RecipeIngredientViewModel> listofIngredients = new List<RecipeIngredientViewModel>();
         private static List<RecipeSpiceViewModel> listofSpices = new List<RecipeSpiceViewModel>();
        
-        public MainController(IAdminRecipeService _adminRecipeService)
+        public MainController(IAdminRecipeService _adminRecipeService, 
+            IRecipeService _recipeService)
         {
             adminRecipeService = _adminRecipeService;
+            recipeService = _recipeService;
         }
 
         [HttpGet]
@@ -26,18 +29,6 @@ namespace Mezeta.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult AllIngredients()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult AllIngredients(List<IngredientSpiceGetModel> model)
-        {
-
-            return View(model);
-        }
 
         public IActionResult Edit()
         {

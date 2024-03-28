@@ -32,13 +32,22 @@ namespace Mezeta.Controllers
             return View(allRecipies);
         }
 
-        //public IActionResult View()
-        //{
-        //    return View();
-        //}
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> AllIngredients()
+        {
+            var model = await recipeService.GetAllIngredients();
+            return View(model);
+        }
 
-       
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> AllSpices()
+        {
+            var model = await recipeService.GetAllSpices();
+            return View(model);
+        }
 
         public IActionResult Calculation()
         {
