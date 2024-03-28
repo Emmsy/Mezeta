@@ -4,11 +4,6 @@ using Mezeta.Core.Models.Admin;
 using Mezeta.Infrastructure.Data.Entities;
 using Mezeta.Infrastrucute.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mezeta.Core.Services.Admin
 {
@@ -24,7 +19,7 @@ namespace Mezeta.Core.Services.Admin
         /// <summary>
         /// Добавя рецепта в базата
         /// </summary>
-        /// <param name="recipe"></param>
+        /// <param name="recipe">recipe</param>
         /// <returns></returns>
         public async Task AddRecipes(RecipeViewModel recipe)
         {
@@ -122,6 +117,10 @@ namespace Mezeta.Core.Services.Admin
                 }).ToListAsync();
         }
 
+        /// <summary>
+        /// Взима всички имена на продуктите
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<IngredientsModel>> GetAllIngredientsName()
         {
             return await data.Ingredients
@@ -132,6 +131,10 @@ namespace Mezeta.Core.Services.Admin
                 }).ToListAsync();
         }
 
+        /// <summary>
+        /// Взима всички имена на подправките
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<IngredientsModel>> GetAllSpicesName()
         {
             return await data.Spices
@@ -142,18 +145,33 @@ namespace Mezeta.Core.Services.Admin
                  }).ToListAsync();
         }
 
+        /// <summary>
+        /// Всичка мерните единици като стринг
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
         public async Task<string> GetMeasureName(int id)
         {
             var name =await data.Measures.Where(d=>d.Id==id).Select(d=>d.Unit).FirstOrDefaultAsync() ?? string.Empty;
             return name;
         }
 
+        /// <summary>
+        /// Взима името на конкретен продукт
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
         public async Task<string> GetIngredientName(int id)
         {
             var name = await data.Ingredients.Where(d => d.Id == id).Select(d => d.Name).FirstOrDefaultAsync() ?? string.Empty;
             return name;
         }
 
+        /// <summary>
+        /// Взима името на конкретна подправка
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
         public async Task<string> GetSpiceName(int id)
         {
             var name = await data.Spices.Where(d => d.Id == id).Select(d => d.Name).FirstOrDefaultAsync() ?? string.Empty;

@@ -2,12 +2,6 @@
 using Mezeta.Core.Models;
 using Mezeta.Infrastrucute.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mezeta.Core.Services
 {
@@ -19,44 +13,77 @@ namespace Mezeta.Core.Services
         {
            data = _data;
         }
-
+        /// <summary>
+        /// Взима всички рецепти от базата
+        /// </summary>
+        /// <returns></returns>
         public async Task <IEnumerable<RecipeViewModel>> GetAllRecipes()
         {
 
-            //var result =  await data.Recipes.Select(d=> new RecipeViewModel()
-            //{
-            //    Id = d.Id,
-            //    Name = d.Name,
-            //    Description = d.Description,
-            //    ImageUrl = d.ImageUrl,
-            //    Ingredients = d.Ingredients.Select(i => new RecipeIngredientViewModel()
-            //    {
-            //        Name = i.Ingredient.Name,
-            //        Quantity = i.Quantity,
-            //        MeasureId = i.MeasureId,
-            //    }).ToList(),
-            //    Spices = d.Spices.Select(s => new RecipeSpiceViewModel()
-            //    {
-            //        Name = s.Spice.Name,
-            //        Quantity = s.Quantity,
-            //        MeasureId=s.MeasureId
-            //    }).ToList()
+            var result = await data.Recipes.Select(d => new RecipeViewModel()
+            {
+                Id = d.Id,
+                Name = d.Name,
+                Description = d.Description,
+                ImageUrl = d.ImageUrl,
 
-            //}).ToListAsync();
+                Ingredients = d.Ingredients.Select(i => new RecipeIngredientViewModel()
+                {
+                    IngredientId = i.Id,
+                    IngredientName = i.Ingredient.Name,
+                    Quantity = i.Quantity,
+                    MeasureId = i.MeasureId,
+                    MeasureUnit=i.UnitOfMeasure.Unit,
+                }).ToList(),
 
-            //return result;
-            throw new NotImplementedException();
+                Spices = d.Spices.Select(s => new RecipeSpiceViewModel()
+                {
+                    SpiceId = s.Id,
+                    SpiceName = s.Spice.Name,
+                    Quantity = s.Quantity,
+                    MeasureId = s.MeasureId,
+                    MeasureUnit = s.UnitOfMeasure.Unit,
+                }).ToList()
+
+            }).ToListAsync();
+
+            return result;
+
+        }
+        /// <summary>
+        /// Взима всички подправки от базата
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<IngredientSpiceGetModel>> GetAllSpices()
+        {
+
+            var result = await data.Spices.Select(d => new IngredientSpiceGetModel()
+            {
+                Id= d.Id,
+                Name = d.Name,
+                Description = d.Description,
+                ImageUrl= d.ImageUrl,
+            }).ToListAsync();
+
+            return result;
         }
 
-        public Task<IEnumerable<RecipeSpiceViewModel>> GetAllSpices()
+        /// <summary>
+        /// Взима всички продукти от базата
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<IngredientSpiceGetModel>> GetAllIngredients()
         {
-            throw new NotImplementedException();
-        }
 
+            var result = await data.Ingredients.Select(d => new IngredientSpiceGetModel()
+            {
+                Id = d.Id,
+                Name = d.Name,
+                Description = d.Description,
+                ImageUrl = d.ImageUrl,
+            }).ToListAsync();
 
-        public Task<IEnumerable<RecipeIngredientViewModel>> GetAllIngredients()
-        {
-            throw new NotImplementedException();
+            return result;
         }
 
    

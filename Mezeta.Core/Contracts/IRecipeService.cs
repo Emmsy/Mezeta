@@ -10,11 +10,8 @@ namespace Mezeta.Core.Contracts
     public interface IRecipeService
     {
         Task<IEnumerable<RecipeViewModel>> GetAllRecipes();
-
-        Task<IEnumerable<RecipeIngredientViewModel>> GetAllIngredients();
-
-        Task<IEnumerable<RecipeSpiceViewModel>> GetAllSpices();
-
+        Task<IEnumerable<IngredientSpiceGetModel>> GetAllIngredients();
+        Task<IEnumerable<IngredientSpiceGetModel>> GetAllSpices();
 
     }
 }

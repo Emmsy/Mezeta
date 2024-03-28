@@ -2,7 +2,7 @@
 
 
 <div class="form-group">
-    <form class="input-group-sm" asp-area="Admin" asp-controller="Main"
+    <form class="input-group-sm" asp-area="Admin" asp-controller="Add"
           asp-action="AddListIngredient" asp-route-id="" method="post">
 
         <label asp-for="IngredientId">Изберете продукт</label>
@@ -41,19 +41,23 @@
     @if (Model.AddedIngredients.Any())
     {
         <h3>Добавени продукти!</h3>
-        <form class="input-group-sm" asp-area="Admin" asp-controller="Main"
-          asp-action="AddRecipe" asp-route-id="" method="get">
+
         @foreach (var msg in Model.AddedIngredients)
         {
             <div class="card">
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p>@msg.IngredientName @msg.Quantity @msg.MeasureUnit</p>                    
-                    </blockquote>
+                <div class="d-inline-flex p-2">
+                    <p>@msg.IngredientName @msg.Quantity @msg.MeasureUnit</p>
+
+                    <form class="input-group-sm" asp-area="Admin" asp-controller="Add"
+                          asp-action="DeleteIngredientFromList" asp-route-id="" method="get">
+                        <button class="btn btn-danger mt-3" type="submit">Изтрий</button>
+                    </form>
+
                 </div>
             </div>
         }
-
+        <form class="input-group-sm" asp-area="Admin" asp-controller="Add"
+              asp-action="AddRecipe" asp-route-id="" method="get">
             <div class="text-center">
                 <input class="btn btn-primary mt-3" type="submit" value="Запази" />
             </div>

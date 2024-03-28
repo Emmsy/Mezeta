@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Добави рецепта";
+    ViewBag.Message = TempData["ErrorMessage"];
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -13,8 +14,11 @@
 
             <div class="card mb-3">
                 <div class="btn-group" role="group">
-                    <a asp-area="Admin" asp-controller="Main" asp-action="AddListIngredient" class="btn btn-outline-primary">Добави продуктите за рецептата</a>
-                    <a asp-area="Admin" asp-controller="Main" asp-action="AddListSpice" class="btn btn-outline-primary">Добави подправките за рецептата</a>
+                    <a asp-area="Admin" asp-controller="Add" asp-action="AddListIngredient" class="btn btn-outline-primary">Добави продуктите за рецептата</a>
+       @*              <span asp-validation-for="Ingredients" class="small text-danger"></span> *@
+
+                    <a asp-area="Admin" asp-controller="Add" asp-action="AddListSpice" class="btn btn-outline-primary">Добави подправките за рецептата</a>
+ @*                    <span asp-validation-for="Spices" class="small text-danger"></span> *@
                 </div>
             </div>
 
@@ -56,9 +60,9 @@
                         </div>
                     }
 
-                    <div class="text-center">
+                   @*  <div class="text-center">
                         <input class="btn btn-primary mt-3" type="submit" value="Редактирай" />
-                    </div>
+                    </div> *@
                @*  </form> *@
             }
 
@@ -79,9 +83,7 @@
                         </div>
                     }
 
-                    <div class="text-center">
-                        <input class="btn btn-primary mt-3" type="submit" value="Редактирай" />
-                    </div>
+              
                @*  </form> *@
             }
 
@@ -90,6 +92,11 @@
                 <h3 class="text-center">Няма добавени продукти</h3>
             }
 
+            @if (ViewBag.Message != null )
+            {
+                <span class="text-danger">@ViewBag.Message</span>
+            }
+         
 
             <div class="text-center">
                 <input class="btn btn-primary mt-3" type="submit" value="Запази рецептата" />
@@ -97,7 +104,7 @@
 
         </form>
 
-        <form class="input-group-sm" asp-area="Admin" asp-controller="Main"
+        <form class="input-group-sm" asp-area="Admin" asp-controller="Add"
               asp-action="ClearScreanForRecipe" asp-route-id="" method="post">
             <div class="text-center">
                 <input class="btn btn-primary mt-3" type="submit" value="Изчисти всичко" />
