@@ -54,6 +54,14 @@ namespace Mezeta.Infrastructure.Data.Configuration
                   " който е изключително подходящ за приготвянето на месни ястия. В наши дни, кимионът редовно се прибавя към различни колбаси от" +
                   " млени и кълцани меса, както и към домашни наденици и суджуци.",
                   ImageUrl="https://img.freepik.com/free-photo/dry-fennel_501050-341.jpg?t=st=1709647257~exp=1709650857~hmac=87727d84031211c9072f2a00bef13844cd414578eecf33f9df2ffb392db97754&w=740"
+                },
+
+                 new Spice()
+                {
+                  Id = 5,
+                  Name = "Захар",
+                  Description = "Захарта спомага за привличане на добрите бактерии и за зреенето на сурово-сушените колбаси",
+                  ImageUrl="https://img.freepik.com/free-photo/world-diabetes-day-sugar-wooden-bowl-dark-surface_1150-26666.jpg?t=st=1711700263~exp=1711703863~hmac=7df68aca69e0e19008e6359acd2ec66925e493b3e157e9ed703f2a82544ca3b1&w=1380"
                 }
 
             };

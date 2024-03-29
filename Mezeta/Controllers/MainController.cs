@@ -25,7 +25,7 @@ namespace Mezeta.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> AllRecipes()
         {
             var allRecipies =  await recipeService.GetAllRecipes();
 

@@ -1,5 +1,4 @@
-﻿@using Mezeta.Core.Models
-@model IEnumerable<RecipeViewModel>
+﻿@model IEnumerable<RecipeViewModel>
 
 @{
     ViewData["Title"] = "Всички рецепти";
@@ -9,36 +8,37 @@
 {
     <h3 class="text-center">Все още няма добавени рецепти</h3>
 }
-//да се довърши вюто когато вече има рецепти в базата
 else
 {
-    @* <div class="container text-center">
-         <h2 class="text-center">@ViewData["Title"]</h2>
-       <div class="text-center row">
+    <div class="container text-center">
+        <h2 class="text-center">@ViewData["Title"]</h2>
+        <hr />
+
+        <div class="text-center row">
             @foreach (var recipe in Model)
             {
-                <div class="card col-4" style="width: 20rem;">
-                    <img class="card-img-top" style="width: 18rem;"
-                 src="@recipe.ImageUrl" alt="Recipe Image">
-                    <div class="card-body">
+                <div class="card col-4" style="width: 50%;">
+                    <img class="card-img-top"
+                         src="@recipe.ImageUrl" alt="Recipe Image">
+                    <div class="card-body te">
 
-                        <h5 class="card-title mt-1">@recipe.Name</h5>
-
-
-                        <p>Необходими продукти: </p>
+                        <h4 class="card-title mt-1">@recipe.Name</h4>
+                        <hr />
+                        <h5 >Необходими продукти: </h5>
                         @foreach (var ing in recipe.Ingredients)
                         {
-                            <p>@ing.Name : @ing.Quantity @ing.Quantity</p>
+                            <p>@ing.IngredientName : @ing.Quantity @ing.MeasureUnit</p>
 
                         }
 
                         @foreach (var sp in recipe.Spices)
                         {
-                            <p>@sp.Name : @sp.Quantity @sp.Quantity</p>
+                            <p>@sp.SpiceName : @sp.Quantity @sp.MeasureUnit</p>
 
                         }
-
-                        <p class="mb-0">Начин на приготвяне:</p>
+                        <br />
+                        <h5 class="mb-0 card-text">Начин на приготвяне:</h5>
+                        <br />
                         <p class="mb-0"> @recipe.Description</p>
                     </div>
 
@@ -49,12 +49,15 @@ else
                     <form class="input-group-sm" asp-route-movieId="@recipe.Id" asp-controller="Main" asp-action="AddToPrepairing" method="post">
                         <input type="submit" value="Add to Prepairing" class="fs-6 btn btn-success mb-3 p-2" />
                     </form>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <partial name="~/Areas/Admin/Views/Shared/_IgredientSpiceButtonsPartial.cshtml" />
+                    }
                 </div>
             }
         </div>
-    </div> *@
-    
-        <hr />
+    </div>
 
-        
+
 }
