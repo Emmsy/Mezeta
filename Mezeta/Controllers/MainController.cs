@@ -16,6 +16,10 @@ namespace Mezeta.Controllers
             recipeService = _recipeService;
         }
 
+        /// <summary>
+        /// дава основна информация за уменията за домашно поризводство на мезета
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Index()
@@ -23,6 +27,10 @@ namespace Mezeta.Controllers
             return View();
         }
 
+        /// <summary>
+        /// показва всичките рецепти
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AllRecipes()
@@ -32,7 +40,10 @@ namespace Mezeta.Controllers
             return View(allRecipies);
         }
 
-
+        /// <summary>
+        /// показва всичките продукти
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AllIngredients()
@@ -41,6 +52,10 @@ namespace Mezeta.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// показва всичките подправки
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AllSpices()

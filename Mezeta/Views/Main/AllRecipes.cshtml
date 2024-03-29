@@ -17,6 +17,8 @@ else
         <div class="text-center row">
             @foreach (var recipe in Model)
             {
+
+@*                 <input type="hidden" asp-for="@recipe.Id" /> *@
                 <div class="card col-4" style="width: 50%;">
                     <img class="card-img-top"
                          src="@recipe.ImageUrl" alt="Recipe Image">
@@ -24,7 +26,7 @@ else
 
                         <h4 class="card-title mt-1">@recipe.Name</h4>
                         <hr />
-                        <h5 >Необходими продукти: </h5>
+                        <h5>Необходими продукти: </h5>
                         @foreach (var ing in recipe.Ingredients)
                         {
                             <p>@ing.IngredientName : @ing.Quantity @ing.MeasureUnit</p>
@@ -53,6 +55,12 @@ else
                     @if (User.IsInRole("Admin"))
                     {
                         <partial name="~/Areas/Admin/Views/Shared/_IgredientSpiceButtonsPartial.cshtml" />
+
+
+                        <form class="input-group-sm" asp-route-id="@recipe.Id" asp-area="Admin" asp-controller="Edit" asp-action="EditRecipe" method="get">
+                            <input type="submit" value="Редактирай" class="btn btn-warning mt-3" />
+                        </form>
+
                     }
                 </div>
             }

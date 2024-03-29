@@ -15,6 +15,10 @@ namespace Mezeta.Core.Contracts.Admin
         //Task<IEnumerable<RecipeIngredientViewModel>> GetAllIngredients();
 
         Task AddRecipes(RecipeViewModel recipe);
+        Task<RecipeViewModel> GetRecipe(int id);
+
+        Task EditRecipe(int id,RecipeViewModel recipe);
+
         Task AddSpice(IngredientSpiceAddModel spice);
         Task AddIngredient(IngredientSpiceAddModel ingredient);
         Task<IEnumerable<MeasuresViewModel>> GetAllMeasures();

@@ -99,8 +99,8 @@ namespace Mezeta.Core.Services.Admin
                 ImageUrl = spice.ImageUrl,
             };
 
-           await  data.AddAsync(crtspice);
-           await data.SaveChangesAsync();
+            await data.AddAsync(crtspice);
+            await data.SaveChangesAsync();
         }
 
         /// <summary>
@@ -110,10 +110,10 @@ namespace Mezeta.Core.Services.Admin
         public async Task<IEnumerable<MeasuresViewModel>> GetAllMeasures()
         {
             return await data.Measures
-                .Select(m=> new MeasuresViewModel
+                .Select(m => new MeasuresViewModel
                 {
                     Id = m.Id,
-                    Unit=m.Unit,
+                    Unit = m.Unit,
                 }).ToListAsync();
         }
 
@@ -127,7 +127,7 @@ namespace Mezeta.Core.Services.Admin
                 .Select(m => new IngredientsModel
                 {
                     Id = m.Id,
-                    Name= m.Name,
+                    Name = m.Name,
                 }).ToListAsync();
         }
 
@@ -152,7 +152,7 @@ namespace Mezeta.Core.Services.Admin
         /// <returns></returns>
         public async Task<string> GetMeasureName(int id)
         {
-            var name =await data.Measures.Where(d=>d.Id==id).Select(d=>d.Unit).FirstOrDefaultAsync() ?? string.Empty;
+            var name = await data.Measures.Where(d => d.Id == id).Select(d => d.Unit).FirstOrDefaultAsync() ?? string.Empty;
             return name;
         }
 
@@ -176,6 +176,73 @@ namespace Mezeta.Core.Services.Admin
         {
             var name = await data.Spices.Where(d => d.Id == id).Select(d => d.Name).FirstOrDefaultAsync() ?? string.Empty;
             return name;
+        }
+
+        public async Task<RecipeViewModel> GetRecipe(int id)
+        {
+            var result = new RecipeViewModel();
+            var crtIngredients = new List<RecipeIngredientViewModel>();
+            var crtSpices = new List<RecipeSpiceViewModel>();
+            var recipe = await data.Recipes.Where(d => d.Id == id).FirstOrDefaultAsync();
+            if (recipe != null)
+            {
+
+                foreach (var item in recipe.Ingredients)
+                {
+                    var crtIngr = new RecipeIngredientViewModel()
+                    {
+                        IngredientId = item.IngredientId,
+                        IngredientName = await GetIngredientName(item.IngredientId),
+                        Quantity = item.Quantity,
+                        MeasureId = item.MeasureId,
+                        MeasureUnit = await GetMeasureName(item.MeasureId),
+                    };
+                    crtIngredients.Add(crtIngr);
+                }
+
+                foreach (var item in recipe.Spices)
+                {
+                    var crtSpice = new RecipeSpiceViewModel()
+                    {
+                        SpiceId = item.SpiceId,
+                        SpiceName = await GetSpiceName(item.SpiceId),
+                        Quantity = item.Quantity,
+                        MeasureId = item.MeasureId,
+                        MeasureUnit = await GetMeasureName(item.MeasureId),
+                    };
+                    crtSpices.Add(crtSpice);
+                }
+
+                result = new RecipeViewModel()
+                {
+                    Id = recipe.Id,
+                    Name = recipe.Name,
+                    Description = recipe.Description,
+                    ImageUrl = recipe.ImageUrl,
+                    Ingredients = crtIngredients,
+                    Spices = crtSpices
+
+                };
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Редактира съдържанието на рецептата
+        /// </summary>
+        /// <param name="id">int id</param>
+        /// <param name="recipe">RecipeViewModel recipe</param>
+        /// <returns></returns>
+        public async Task EditRecipe(int id, RecipeViewModel recipe)
+        {
+            var crtIngredients = new List<RecipeIngredient>();
+            var crtSpices = new List<RecipeSpice>();
+            var crtRecipe = data.Recipes.Where(data => data.Id == id).FirstOrDefault();
+            crtRecipe.Name = recipe.Name;
+            crtRecipe.Description = recipe.Description;
+            crtRecipe.ImageUrl = recipe.ImageUrl;
+           
+            await data.SaveChangesAsync();
         }
     }
 }

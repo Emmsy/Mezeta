@@ -1,0 +1,106 @@
+﻿@model RecipeViewModel
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+
+            <div class="card mb-3">
+                <div class="btn-group" role="group">
+                    <a asp-area="Admin" asp-controller="Add" asp-action="AddListIngredient" class="btn btn-outline-primary">Добави продуктите за рецептата</a>
+                    @*              <span asp-validation-for="Ingredients" class="small text-danger"></span> *@
+
+                    <a asp-area="Admin" asp-controller="Add" asp-action="AddListSpice" class="btn btn-outline-primary">Добави подправките за рецептата</a>
+                    @*                    <span asp-validation-for="Spices" class="small text-danger"></span> *@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Name">Заглавие</label>
+                <input asp-for="Name" class="form-control" placeholder="Заглавие на рецептата...">
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ImageUrl">Снимка</label>
+                <input asp-for="ImageUrl" class="form-control" placeholder="URL снимка...">
+                <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description">Описание</label>
+                <textarea asp-for="Description" rows="4" class="form-control" placeholder="Описание..."></textarea>
+                <span asp-validation-for="Description" class="small text-danger"></span>
+            </div>
+
+
+
+
+            @if (Model.Ingredients.Any())
+            {
+                <h3>Добавени продукти!</h3>
+
+                @*   <form class="input-group-sm" asp-area="Admin" asp-controller="Main"
+            asp-action="AddRecipe" asp-route-id="" method="post"> *@
+                @foreach (var ing in Model.Ingredients)
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>@ing.IngredientName @ing.Quantity @ing.MeasureUnit</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                }
+
+                @*  <div class="text-center">
+            <input class="btn btn-primary mt-3" type="submit" value="Редактирай" />
+            </div> *@
+                @*  </form> *@
+            }
+
+            @if (Model.Spices.Any())
+            {
+                <h3>Добавени подправки!</h3>
+                @*
+            <form class="input-group-sm" asp-area="Admin" asp-controller="Main"
+            asp-action="AddRecipe" asp-route-id="" method="post"> *@
+                @foreach (var sp in Model.Spices)
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>@sp.SpiceName @sp.Quantity @sp.MeasureUnit</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                }
+
+
+                @*  </form> *@
+            }
+
+            @if (!Model.Spices.Any() && !Model.Ingredients.Any())
+            {
+                <h3 class="text-center">Няма добавени продукти</h3>
+            }
+
+            @if (ViewBag.Message != null)
+            {
+                <span class="text-danger">@ViewBag.Message</span>
+            }
+
+
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Запази рецептата" />
+            </div>
+
+        </form>
+
+        <form class="input-group-sm" asp-area="Admin" asp-controller="Add"
+              asp-action="ClearScreanForRecipe" asp-route-id="" method="post">
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Изчисти всичко" />
+            </div>
+        </form>
+    </div>
+</div>

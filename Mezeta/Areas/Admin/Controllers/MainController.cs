@@ -30,9 +30,9 @@ namespace Mezeta.Areas.Admin.Controllers
         }
 
 
-        public IActionResult Edit()
-        {
-            return View();
-        }
+        //public IActionResult Edit()
+        //{
+        //    return View();
+        //}
     }
 }
