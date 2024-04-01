@@ -4,6 +4,7 @@ using Mezeta.Core.Models.Admin;
 using Mezeta.Infrastructure.Data.Entities;
 using Mezeta.Infrastrucute.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace Mezeta.Core.Services.Admin
 {
@@ -181,9 +182,15 @@ namespace Mezeta.Core.Services.Admin
         public async Task<RecipeViewModel> GetRecipe(int id)
         {
             var result = new RecipeViewModel();
+
+            var recipe = await data.Recipes.Where(d => d.Id == id)
+                .Include(d => d.Ingredients)
+                .Include(d => d.Spices)
+                .FirstOrDefaultAsync();
+
             var crtIngredients = new List<RecipeIngredientViewModel>();
             var crtSpices = new List<RecipeSpiceViewModel>();
-            var recipe = await data.Recipes.Where(d => d.Id == id).FirstOrDefaultAsync();
+
             if (recipe != null)
             {
 
@@ -224,6 +231,7 @@ namespace Mezeta.Core.Services.Admin
 
                 };
             }
+ 
             return result;
         }
 
@@ -241,7 +249,7 @@ namespace Mezeta.Core.Services.Admin
             crtRecipe.Name = recipe.Name;
             crtRecipe.Description = recipe.Description;
             crtRecipe.ImageUrl = recipe.ImageUrl;
-           
+
             await data.SaveChangesAsync();
         }
     }
