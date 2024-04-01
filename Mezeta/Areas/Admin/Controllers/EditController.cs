@@ -22,7 +22,7 @@ namespace Mezeta.Areas.Admin.Controllers
         public async Task<IActionResult> EditRecipe(int id)
         {
             var model = await adminRecipeService.GetRecipe(id);
-            tempRecipe = new RecipeViewModel();
+            tempRecipe = model;
 
             return View(model);
         }
@@ -31,9 +31,9 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRecipe(int id,RecipeViewModel model)
         {
-            //model.Spices = listofSpices;
-            //model.Ingredients = listofIngredients;
-            //tempRecipe = model;
+            model.Spices = tempRecipe.Spices;
+            model.Ingredients = tempRecipe.Ingredients;
+            tempRecipe = model;
 
             if (!ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace Mezeta.Areas.Admin.Controllers
             //    return View(tempRecipe);
             //}
 
-            await adminRecipeService.AddRecipes(model);
+            await adminRecipeService.EditRecipe(id,model);
 
             listofIngredients = new List<RecipeIngredientViewModel>();
             listofSpices = new List<RecipeSpiceViewModel>();
