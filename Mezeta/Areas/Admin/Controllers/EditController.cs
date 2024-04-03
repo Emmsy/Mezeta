@@ -17,7 +17,11 @@ namespace Mezeta.Areas.Admin.Controllers
             adminRecipeService = _adminRecipeService;
         }
 
-
+        /// <summary>
+        /// редактиране на рецепта
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> EditRecipe(int id)
         {
@@ -27,6 +31,12 @@ namespace Mezeta.Areas.Admin.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// редактиране на рецепта
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         [HttpPost]
         public async Task<IActionResult> EditRecipe(int id,RecipeViewModel model)
@@ -39,17 +49,6 @@ namespace Mezeta.Areas.Admin.Controllers
             {
                 return View(model);
             }
-            
-            //if (listofIngredients.Count == 0)
-            //{
-            //    TempData["ErrorMessage"] = "Трябва да добавите продукти";
-            //    return View(tempRecipe);
-            //}
-            //if (listofSpices.Count == 0)
-            //{
-            //    TempData["ErrorMessage"] = "Трябва да добавите подправки";
-            //    return View(tempRecipe);
-            //}
 
             await adminRecipeService.EditRecipe(id,model);
 
@@ -57,18 +56,20 @@ namespace Mezeta.Areas.Admin.Controllers
             listofSpices = new List<RecipeSpiceViewModel>();
 
 
-            return RedirectToAction("Index", "Home", new { area = "Home" });
+            return RedirectToAction("AllRecipes", "Main", new { area = "Home" });
         }
 
         /// <summary>
-        /// Добавя Продукт
+        /// Редактира Продукт
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult AddIngredient()
+        public async Task<IActionResult> EditIngredient(int id)
         {
-            return View();
+            var model = await adminRecipeService.GetIngredient(id);
+
+            return View(model);
         }
         /// <summary>
         /// Добавя Продукт
@@ -76,7 +77,7 @@ namespace Mezeta.Areas.Admin.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddIngredient(IngredientSpiceAddModel model)
+        public async Task<IActionResult> EditIngredient(int id,IngredientSpiceGetModel model)
         {
 
             if (!ModelState.IsValid)
@@ -84,10 +85,9 @@ namespace Mezeta.Areas.Admin.Controllers
                 return View(model);
             }
 
-            await adminRecipeService.AddIngredient(model);
+            await adminRecipeService.EditIngredient(id,model);
 
-            //return RedirectToAction("AllSpices", "Admin", new {area="Admin"});
-            return RedirectToAction("Index", "Home", new { area = "Home" });
+            return RedirectToAction("AllIngredients", "Main", new { area = "Home" });
         }
 
         /// <summary>
@@ -96,117 +96,28 @@ namespace Mezeta.Areas.Admin.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult AddSpice()
+        public async Task<IActionResult> EditSpice(int id)
         {
-            var model = new IngredientSpiceAddModel();
+            var model = await adminRecipeService.GetSpice(id);
             return View(model);
         }
+
         /// <summary>
         /// Добавя подправка
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddSpice(IngredientSpiceAddModel model)
+        public async Task<IActionResult> EditSpice(int id, IngredientSpiceGetModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            await adminRecipeService.AddSpice(model);
+            await adminRecipeService.EditSpice(id,model);
 
-            //return RedirectToAction("AllSpices", "Admin", new {area="Admin"});
-            return RedirectToAction("Index", "Home", new { area = "Home" });
-        }
-
-        /// <summary>
-        /// Добавяне на лист от продукти за текуща рецепта
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> AddListIngredient()
-        {
-
-            var model = new IngredientViewModel()
-            {
-                Ingredients = await adminRecipeService.GetAllIngredientsName(),
-                Measures = await adminRecipeService.GetAllMeasures(),
-                AddedIngredients = listofIngredients
-            };
-            return View(model);
-        }
-
-        /// <summary>
-        /// Добавяне на лист от продукти за текуща рецепта
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> AddListIngredient(IngredientViewModel model)
-        {
-
-            var crt = new RecipeIngredientViewModel()
-            {
-                IngredientId = model.IngredientId,
-                IngredientName = await adminRecipeService.GetIngredientName(model.IngredientId),
-                MeasureId = model.MeasureId,
-                MeasureUnit = await adminRecipeService.GetMeasureName(model.MeasureId),
-                Quantity = model.Quantity,
-            };
-            listofIngredients.Add(crt);
-
-            return RedirectToAction("AddListIngredient", "Add", new { area = "Admin" });
-        }
-
-        /// <summary>
-        ///  Добавяне на лист от подправки за текуща рецепта
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> AddListSpice()
-        {
-
-            var model = new SpiceViewModel()
-            {
-                Spices = await adminRecipeService.GetAllSpicesName(),
-                Measures = await adminRecipeService.GetAllMeasures(),
-                AddedSpices = listofSpices
-            };
-            return View(model);
-        }
-
-        /// <summary>
-        /// Добавяне на лист от подправки за текуща рецепта
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> AddListSpice(SpiceViewModel model)
-        {
-
-            var crt = new RecipeSpiceViewModel()
-            {
-                SpiceId = model.SpiceId,
-                SpiceName = await adminRecipeService.GetSpiceName(model.SpiceId),
-                MeasureId = model.MeasureId,
-                MeasureUnit = await adminRecipeService.GetMeasureName(model.MeasureId),
-                Quantity = model.Quantity,
-            };
-            listofSpices.Add(crt);
-
-            return RedirectToAction("AddListSpice", "Add", new { area = "Admin" });
-        }
-
-        /// <summary>
-        /// Изчиства формата за попълване за добавяне на рецепта
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public IActionResult ClearScreanForRecipe()
-        {
-            listofIngredients = new List<RecipeIngredientViewModel>();
-            listofSpices = new List<RecipeSpiceViewModel>();
-            tempRecipe=new RecipeViewModel();
-            return RedirectToAction("AddRecipe", "Add", new { area = "Admin" });
+            return RedirectToAction("AllSpices", "Main", new { area = "Home" });
         }
 
     }

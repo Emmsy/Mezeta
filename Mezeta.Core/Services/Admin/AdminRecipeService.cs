@@ -241,6 +241,7 @@ namespace Mezeta.Core.Services.Admin
         /// <param name="id">int id</param>
         /// <param name="recipe">RecipeViewModel recipe</param>
         /// <returns></returns>
+        /// TO DO LIST OF INGREDIENTS AND SPICES TO BE EDITED AND CHANGE !!!!!
         public async Task EditRecipe(int id, RecipeViewModel recipe)
         {
             var crtIngredients = new List<RecipeIngredient>();
@@ -249,6 +250,55 @@ namespace Mezeta.Core.Services.Admin
             crtRecipe.Name = recipe.Name;
             crtRecipe.Description = recipe.Description;
             crtRecipe.ImageUrl = recipe.ImageUrl;
+
+            await data.SaveChangesAsync();
+        }
+
+        public async Task<IngredientSpiceGetModel> GetSpice(int id)
+        {
+            var crtSpice=await data.Spices.Where(d=>d.Id == id).FirstOrDefaultAsync();
+            var result = new IngredientSpiceGetModel()
+            {
+                Id=crtSpice.Id,
+                Name=crtSpice.Name,
+                Description = crtSpice.Description,
+                ImageUrl = crtSpice.ImageUrl,
+            };
+           
+            return result;
+        }
+
+        public async Task EditSpice(int id, IngredientSpiceGetModel ingredient)
+        {
+            var crtSpice = await data.Spices.Where(d => d.Id == id).FirstOrDefaultAsync();
+            crtSpice.Name = ingredient.Name;
+            crtSpice.Description = ingredient.Description;
+            crtSpice.ImageUrl = ingredient.ImageUrl;
+
+            await data.SaveChangesAsync();
+
+        }
+
+        public async Task<IngredientSpiceGetModel> GetIngredient(int id)
+        {
+            var crtIngredient = await data.Ingredients.Where(d => d.Id == id).FirstOrDefaultAsync();
+            var result = new IngredientSpiceGetModel()
+            {
+                Id = crtIngredient.Id,
+                Name = crtIngredient.Name,
+                Description = crtIngredient.Description,
+                ImageUrl = crtIngredient.ImageUrl,
+            };
+
+            return result;
+        }
+
+        public async Task EditIngredient(int id, IngredientSpiceGetModel ingredient)
+        {
+            var crtIngredient = await data.Ingredients.Where(d => d.Id == id).FirstOrDefaultAsync();
+            crtIngredient.Name = ingredient.Name;
+            crtIngredient.Description = ingredient.Description;
+            crtIngredient.ImageUrl = ingredient.ImageUrl;
 
             await data.SaveChangesAsync();
         }
