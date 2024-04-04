@@ -2,6 +2,7 @@
 using Mezeta.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Mezeta.Controllers
 {
@@ -62,6 +63,40 @@ namespace Mezeta.Controllers
         {
             var model = await recipeService.GetAllSpices();
             return View(model);
+        }
+
+
+        /// <summary>
+        /// показва списъка с любими рецепти
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Favorites()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account", new { area = "Identity" });
+            }
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var model = await recipeService.GetFavoritesRecipes(userId);
+            return View(model);
+        }
+
+        /// <summary>
+        /// добавя рецепта в списъка с любими
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> AddToFavorites(int recipeId)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account", new { area = "Identity" });
+            }
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await recipeService.AddToFavorites(userId, recipeId);
+
+            return RedirectToAction("Favorites", "Main");
         }
 
         public IActionResult Calculation()

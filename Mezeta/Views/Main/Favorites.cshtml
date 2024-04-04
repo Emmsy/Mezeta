@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<RecipeViewModel>
 
 @{
-    ViewData["Title"] = "Всички рецепти";
+    ViewData["Title"] = "Любими рецепти";
 }
 
 @if (Model.Count() == 0)
@@ -45,15 +45,15 @@ else
                     </div>
 
                     <div class="btn-group" style="justify-content: space-around">
-                        <form class="input-group-sm" asp-route-recipeId="@recipe.Id" asp-controller="Main" asp-action="AddToFavorites" method="post">
-                            <input type="submit" value="Add to Favorites" class="fs-6 btn btn-success mb-3 p-2" />
+                        <form class="input-group-sm" asp-route-recipeId="@recipe.Id" asp-controller="Main" asp-action="RemoveFromFavorites" method="post">
+                            <input type="submit" value="Remove From Favorites" class="fs-6 btn btn-success mb-3 p-2" />
                         </form>
 
                         <form class="input-group-sm" asp-route-recipeId="@recipe.Id" asp-controller="Main" asp-action="AddToPrepairing" method="post">
                             <input type="submit" value="Add to Prepairing" class="fs-6 btn btn-success mb-3 p-2" />
                         </form>
 
-                        @if (User.IsInRole("Admin"))
+@*                         @if (User.IsInRole("Admin"))
                         {
                             <form class="input-group-sm" asp-route-id="@recipe.Id" asp-area="Admin" asp-controller="Edit" asp-action="EditRecipe" method="get">
                                 <input type="submit" value="Редактирай" class="fs-6 btn btn-warning mb-3 p-2" />
@@ -62,7 +62,7 @@ else
                             <form class="input-group-sm" asp-route-id="@recipe.Id" asp-area="Admin" asp-controller="Delete" asp-action="DeleteRecipe" method="get">
                                 <input type="submit" value="Изтрий" class="fs-6 btn btn-danger mb-3 p-2" />
                             </form>
-                        }
+                        } *@
                     </div>
                 </div>
             }

@@ -71,7 +71,7 @@ namespace Mezeta.Areas.Admin.Controllers
             listofSpices = new List<RecipeSpiceViewModel>();
 
 
-            return RedirectToAction("Index", "Home", new { area = "Home" });
+            return RedirectToAction("AllRecipes", "Main", new { area = "Home" });
         }
 
         /// <summary>
@@ -100,8 +100,7 @@ namespace Mezeta.Areas.Admin.Controllers
 
             await adminRecipeService.AddIngredient(model);
 
-            //return RedirectToAction("AllSpices", "Admin", new {area="Admin"});
-            return RedirectToAction("Index", "Home", new { area = "Home" });
+            return RedirectToAction("AllIngredients", "Main", new { area = "Home" });
         }
 
         /// <summary>
@@ -130,8 +129,7 @@ namespace Mezeta.Areas.Admin.Controllers
 
             await adminRecipeService.AddSpice(model);
 
-            //return RedirectToAction("AllSpices", "Admin", new {area="Admin"});
-            return RedirectToAction("Index", "Home", new { area = "Home" });
+            return RedirectToAction("AllSpices", "Main", new { area = "Home" });
         }
 
         /// <summary>

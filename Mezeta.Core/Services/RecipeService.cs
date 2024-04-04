@@ -13,6 +13,7 @@ namespace Mezeta.Core.Services
         {
            data = _data;
         }
+
         /// <summary>
         /// Взима всички рецепти от базата
         /// </summary>
@@ -50,6 +51,7 @@ namespace Mezeta.Core.Services
             return result;
 
         }
+
         /// <summary>
         /// Взима всички подправки от базата
         /// </summary>
@@ -86,6 +88,62 @@ namespace Mezeta.Core.Services
             return result;
         }
 
-   
-    }
+        /// <summary>
+        /// връща всички любими рецепти
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<RecipeViewModel>> GetFavoritesRecipes(string userId)
+        {
+            var user = await data.Users.Where(d => d.Id == userId).Include(d=>d.Favorites).FirstOrDefaultAsync();
+            var recipe =  user.Favorites.ToList();
+            var result = new List<RecipeViewModel>();
+           
+            foreach (var item in recipe)
+            {
+                var crt = new RecipeViewModel()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    ImageUrl = item.ImageUrl,
+                };
+                result.Add(crt);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Добавя рецепта в списъка с любими на текущия потребител
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
+        public async Task AddToFavorites(string userId,int recipeId)
+        {
+            var user = await data.Users.Where(d => d.Id == userId).Include(d=>d.Favorites).FirstOrDefaultAsync();
+
+            var recipe = await data.Recipes.Where(d => d.Id == recipeId).FirstOrDefaultAsync();
+            if (user != null)
+            {
+                var userFavs = user.Favorites.ToList();
+                var containsThisRecipe =  user.Favorites.Select(d=>d.Id == recipeId).FirstOrDefault();
+                if (!containsThisRecipe)
+                {
+                    userFavs.Add(recipe);
+                    user.Favorites = userFavs;
+                    await data.SaveChangesAsync(); 
+                }          
+            }
+           
+        }
+
+    
+        public Task AddToPreparings(string userId, int recipeId)
+        {
+            throw new NotImplementedException();
+        }
+    }    
+    
 }
