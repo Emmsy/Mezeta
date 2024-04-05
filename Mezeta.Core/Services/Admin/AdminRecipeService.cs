@@ -4,7 +4,6 @@ using Mezeta.Core.Models.Admin;
 using Mezeta.Infrastructure.Data.Entities;
 using Mezeta.Infrastrucute.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace Mezeta.Core.Services.Admin
 {
@@ -179,6 +178,11 @@ namespace Mezeta.Core.Services.Admin
             return name;
         }
 
+        /// <summary>
+        /// Взима рецепта от базата и я връща мапнат към контролера
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<RecipeViewModel> GetRecipe(int id)
         {
             var result = new RecipeViewModel();
@@ -254,6 +258,11 @@ namespace Mezeta.Core.Services.Admin
             await data.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Взима подправка от базата и връща мапнат към контролера
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IngredientSpiceGetModel> GetSpice(int id)
         {
             var crtSpice=await data.Spices.Where(d=>d.Id == id).FirstOrDefaultAsync();
@@ -268,6 +277,12 @@ namespace Mezeta.Core.Services.Admin
             return result;
         }
 
+        /// <summary>
+        /// Редактира подправка в базата
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ingredient"></param>
+        /// <returns></returns>
         public async Task EditSpice(int id, IngredientSpiceGetModel ingredient)
         {
             var crtSpice = await data.Spices.Where(d => d.Id == id).FirstOrDefaultAsync();
@@ -279,6 +294,11 @@ namespace Mezeta.Core.Services.Admin
 
         }
 
+        /// <summary>
+        /// Взима продукт от базата и връща мапнат към контролера
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IngredientSpiceGetModel> GetIngredient(int id)
         {
             var crtIngredient = await data.Ingredients.Where(d => d.Id == id).FirstOrDefaultAsync();
@@ -293,6 +313,13 @@ namespace Mezeta.Core.Services.Admin
             return result;
         }
 
+
+        /// <summary>
+        /// Редактира продукт в базата
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ingredient"></param>
+        /// <returns></returns>
         public async Task EditIngredient(int id, IngredientSpiceGetModel ingredient)
         {
             var crtIngredient = await data.Ingredients.Where(d => d.Id == id).FirstOrDefaultAsync();
@@ -303,6 +330,11 @@ namespace Mezeta.Core.Services.Admin
             await data.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Изтрива рецепта от базата
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task DeleteRecipe(int id)
         {
             var crtRecipe = await data.Recipes.Where(d=>d.Id == id)
@@ -318,6 +350,11 @@ namespace Mezeta.Core.Services.Admin
              
         }
 
+        /// <summary>
+        /// Изтрива подпоравка от базата
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task DeleteSpice(int id)
         {
             var crtSpice = await data.Spices.Where(d => d.Id == id).FirstOrDefaultAsync();
@@ -328,6 +365,11 @@ namespace Mezeta.Core.Services.Admin
             }
         }
 
+        /// <summary>
+        /// Изтрива продукт от базата
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task DeleteIngredient(int id)
         {
             var crtIngredient = await data.Ingredients.Where(d => d.Id == id).FirstOrDefaultAsync();
