@@ -302,5 +302,40 @@ namespace Mezeta.Core.Services.Admin
 
             await data.SaveChangesAsync();
         }
+
+        public async Task DeleteRecipe(int id)
+        {
+            var crtRecipe = await data.Recipes.Where(d=>d.Id == id)
+                .Include(d=>d.Ingredients)
+                .Include(d=>d.Spices)
+                .FirstOrDefaultAsync();
+
+            if(crtRecipe != null)
+            {
+                data.Recipes.Remove(crtRecipe);
+                await data.SaveChangesAsync();
+            }
+             
+        }
+
+        public async Task DeleteSpice(int id)
+        {
+            var crtSpice = await data.Spices.Where(d => d.Id == id).FirstOrDefaultAsync();
+            if (crtSpice != null)
+            {
+                data.Spices.Remove(crtSpice);
+                await data.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteIngredient(int id)
+        {
+            var crtIngredient = await data.Ingredients.Where(d => d.Id == id).FirstOrDefaultAsync();
+            if (crtIngredient != null)
+            {
+                data.Ingredients.Remove(crtIngredient);
+                await data.SaveChangesAsync();
+            }
+        }
     }
 }

@@ -59,7 +59,7 @@ else
                                 <input type="submit" value="Редактирай" class="fs-6 btn btn-warning mb-3 p-2" />
                             </form>
 
-                            <form class="input-group-sm" asp-route-id="@recipe.Id" asp-area="Admin" asp-controller="Delete" asp-action="DeleteRecipe" method="get">
+                            <form class="input-group-sm" asp-route-id="@recipe.Id" asp-area="Admin" asp-controller="Delete" asp-action="DeleteRecipe" method="post">
                                 <input type="submit" value="Изтрий" class="fs-6 btn btn-danger mb-3 p-2" />
                             </form>
                         }

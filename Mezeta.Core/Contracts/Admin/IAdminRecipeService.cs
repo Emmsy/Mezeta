@@ -10,21 +10,20 @@ namespace Mezeta.Core.Contracts.Admin
 {
     public interface IAdminRecipeService
     {
-        //Task<IEnumerable<RecipeViewModel>> GetAllRecipes();
-        //Task<IEnumerable<RecipeSpiceViewModel>> GetAllSpices();
-        //Task<IEnumerable<RecipeIngredientViewModel>> GetAllIngredients();
-
         Task AddRecipes(RecipeViewModel recipe);
         Task<RecipeViewModel> GetRecipe(int id);
         Task EditRecipe(int id,RecipeViewModel recipe);
+        Task DeleteRecipe(int id);
 
         Task AddSpice(IngredientSpiceAddModel spice);
         Task<IngredientSpiceGetModel> GetSpice(int id);
         Task EditSpice(int id, IngredientSpiceGetModel ingredient);
+        Task DeleteSpice(int id);
 
         Task AddIngredient(IngredientSpiceAddModel ingredient);
         Task<IngredientSpiceGetModel> GetIngredient(int id);
         Task EditIngredient(int id, IngredientSpiceGetModel ingredient);
+        Task DeleteIngredient(int id);
 
         Task<IEnumerable<MeasuresViewModel>> GetAllMeasures();
         Task<IEnumerable<IngredientsModel>> GetAllIngredientsName();

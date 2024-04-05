@@ -34,17 +34,23 @@
                                                     <form class="input-group-sm" asp-route-id="@product.Id" asp-area="Admin" asp-controller="Edit" asp-action="EditIngredient" method="get">
                                                         <input type="submit" value="Редактирай" class="fs-6 btn btn-warning mb-3 p-2" />
                                                     </form>
+
+                                                    <form class="input-group-sm" asp-route-id="@product.Id" asp-area="Admin" asp-controller="Delete" asp-action="DeleteIngredient" method="post">
+                                                        <input type="submit" value="Изтрий" class="fs-6 btn btn-danger mb-3 p-2" />
+                                                    </form>
                                                 }
                                                 else
                                                 {
                                                     <form class="input-group-sm" asp-route-id="@product.Id" asp-area="Admin" asp-controller="Edit" asp-action="EditSpice" method="get">
                                                         <input type="submit" value="Редактирай" class="fs-6 btn btn-warning mb-3 p-2" />
                                                     </form>
+
+                                                    <form class="input-group-sm" asp-route-id="@product.Id" asp-area="Admin" asp-controller="Delete" asp-action="DeleteSpice" method="post">
+                                                        <input type="submit" value="Изтрий" class="fs-6 btn btn-danger mb-3 p-2" />
+                                                    </form>
                                                 }
 
-                                                <form class="input-group-sm" asp-route-id="@product.Id" asp-area="Admin" asp-controller="Delete" asp-action="DeleteIngredientSpice" method="get">
-                                                    <input type="submit" value="Изтрий" class="fs-6 btn btn-danger mb-3 p-2" />
-                                                </form>
+                                               
                                             }
 
                                         </div>

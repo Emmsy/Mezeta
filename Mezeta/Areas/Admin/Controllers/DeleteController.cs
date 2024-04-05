@@ -1,0 +1,49 @@
+﻿using Mezeta.Core.Contracts.Admin;
+using Mezeta.Core.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Mezeta.Areas.Admin.Controllers
+{
+    public class DeleteController : BaseController
+    {
+        private readonly IAdminRecipeService adminRecipeService;
+        private static List<RecipeIngredientViewModel> listofIngredients = new List<RecipeIngredientViewModel>();
+        private static List<RecipeSpiceViewModel> listofSpices = new List<RecipeSpiceViewModel>();
+        private static RecipeViewModel tempRecipe = new RecipeViewModel();
+
+        public DeleteController(IAdminRecipeService _adminRecipeService)
+        {
+            adminRecipeService = _adminRecipeService;
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRecipe(int id)
+        {
+            await adminRecipeService.DeleteRecipe(id);
+
+            return RedirectToAction("AllRecipes", "Main", new { area = "Home" });
+        }
+
+
+      
+        [HttpPost]
+        public async Task<IActionResult> DeleteIngredient(int id)
+        {
+
+            await adminRecipeService.DeleteIngredient(id);
+
+            return RedirectToAction("AllIngredients", "Main", new { area = "Home" });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSpice(int id)
+        {
+
+            await adminRecipeService.DeleteSpice(id);
+
+            return RedirectToAction("AllSpices", "Main", new { area = "Home" });
+        }
+    }
+}

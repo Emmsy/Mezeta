@@ -22,13 +22,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                         </li>
-                        @if (this.User?.Identity!=null)
+                        @if (this.User.Identity?.IsAuthenticated==true)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Favorites">Любими рецепти</a>
                             </li>
                         }
-                        @if (this.User?.Identity!=null && this.User.IsInRole("Admin"))
+                        @if (this.User.Identity?.IsAuthenticated == true && this.User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Main" asp-action="All">Админ. портал</a>
