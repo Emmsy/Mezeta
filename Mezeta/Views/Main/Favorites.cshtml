@@ -18,7 +18,6 @@ else
             @foreach (var recipe in Model)
             {
 
-                @*                 <input type="hidden" asp-for="@recipe.Id" /> *@
                 <div class="card col-4" style="width: 50%;">
                     <img class="card-img-top"
                          src="@recipe.ImageUrl" alt="Recipe Image">
@@ -53,16 +52,6 @@ else
                             <input type="submit" value="Add to Prepairing" class="fs-6 btn btn-success mb-3 p-2" />
                         </form>
 
-@*                         @if (User.IsInRole("Admin"))
-                        {
-                            <form class="input-group-sm" asp-route-id="@recipe.Id" asp-area="Admin" asp-controller="Edit" asp-action="EditRecipe" method="get">
-                                <input type="submit" value="Редактирай" class="fs-6 btn btn-warning mb-3 p-2" />
-                            </form>
-
-                            <form class="input-group-sm" asp-route-id="@recipe.Id" asp-area="Admin" asp-controller="Delete" asp-action="DeleteRecipe" method="get">
-                                <input type="submit" value="Изтрий" class="fs-6 btn btn-danger mb-3 p-2" />
-                            </form>
-                        } *@
                     </div>
                 </div>
             }

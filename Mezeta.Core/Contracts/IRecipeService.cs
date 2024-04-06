@@ -12,9 +12,14 @@ namespace Mezeta.Core.Contracts
         Task<IEnumerable<RecipeViewModel>> GetAllRecipes();
         Task<IEnumerable<IngredientSpiceGetModel>> GetAllIngredients();
         Task<IEnumerable<IngredientSpiceGetModel>> GetAllSpices();
+
         Task<IEnumerable<RecipeViewModel>> GetFavoritesRecipes(string userId);
         Task AddToFavorites(string userId, int recipeId);
+        Task RemoveFromFavorites(string userId, int recipeId);
+
+        Task<IEnumerable<RecipeViewModel>> GetPrepairingsRecipes(string userId);
         Task AddToPreparings(string userId, int recipeId);
+        Task RemoveFromPreparings(string userId, int recipeId);
 
     }
 }

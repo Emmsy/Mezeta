@@ -11,14 +11,14 @@ namespace Mezeta.Core.Services
 
         public RecipeService(ApplicationDbContext _data)
         {
-           data = _data;
+            data = _data;
         }
 
         /// <summary>
         /// Взима всички рецепти от базата
         /// </summary>
         /// <returns></returns>
-        public async Task <IEnumerable<RecipeViewModel>> GetAllRecipes()
+        public async Task<IEnumerable<RecipeViewModel>> GetAllRecipes()
         {
 
             var result = await data.Recipes.Select(d => new RecipeViewModel()
@@ -34,7 +34,7 @@ namespace Mezeta.Core.Services
                     IngredientName = i.Ingredient.Name,
                     Quantity = i.Quantity,
                     MeasureId = i.MeasureId,
-                    MeasureUnit=i.UnitOfMeasure.Unit,
+                    MeasureUnit = i.UnitOfMeasure.Unit,
                 }).ToList(),
 
                 Spices = d.Spices.Select(s => new RecipeSpiceViewModel()
@@ -61,10 +61,10 @@ namespace Mezeta.Core.Services
 
             var result = await data.Spices.Select(d => new IngredientSpiceGetModel()
             {
-                Id= d.Id,
+                Id = d.Id,
                 Name = d.Name,
                 Description = d.Description,
-                ImageUrl= d.ImageUrl,
+                ImageUrl = d.ImageUrl,
             }).ToListAsync();
 
             return result;
@@ -95,21 +95,37 @@ namespace Mezeta.Core.Services
         /// <returns></returns>
         public async Task<IEnumerable<RecipeViewModel>> GetFavoritesRecipes(string userId)
         {
-            var user = await data.Users.Where(d => d.Id == userId).Include(d=>d.Favorites).FirstOrDefaultAsync();
-            var recipe =  user.Favorites.ToList();
-            var result = new List<RecipeViewModel>();
-           
-            foreach (var item in recipe)
+            var user = await data.Users.Where(d => d.Id == userId).Include(d => d.Favorites).FirstOrDefaultAsync();
+            var recipeIds = user.Favorites.Select(d => d.Id).ToList();
+
+            var allRecipes =  data.Recipes.Include(i => i.Ingredients).Include(s => s.Spices).Where(t => recipeIds.Contains(t.Id));
+
+            var result = await   allRecipes.Select(d => new RecipeViewModel()
             {
-                var crt = new RecipeViewModel()
+                Id = d.Id,
+                Name = d.Name,
+                Description = d.Description,
+                ImageUrl = d.ImageUrl,
+
+                Ingredients = d.Ingredients.Select(i => new RecipeIngredientViewModel()
                 {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Description = item.Description,
-                    ImageUrl = item.ImageUrl,
-                };
-                result.Add(crt);
-            }
+                    IngredientId = i.Id,
+                    IngredientName = i.Ingredient.Name,
+                    Quantity = i.Quantity,
+                    MeasureId = i.MeasureId,
+                    MeasureUnit = i.UnitOfMeasure.Unit,
+                }).ToList(),
+
+                Spices = d.Spices.Select(s => new RecipeSpiceViewModel()
+                {
+                    SpiceId = s.Id,
+                    SpiceName = s.Spice.Name,
+                    Quantity = s.Quantity,
+                    MeasureId = s.MeasureId,
+                    MeasureUnit = s.UnitOfMeasure.Unit,
+                }).ToList()
+
+            }).ToListAsync();
 
             return result;
         }
@@ -120,30 +136,67 @@ namespace Mezeta.Core.Services
         /// <param name="userId"></param>
         /// <param name="recipeId"></param>
         /// <returns></returns>
-        public async Task AddToFavorites(string userId,int recipeId)
+        public async Task AddToFavorites(string userId, int recipeId)
         {
-            var user = await data.Users.Where(d => d.Id == userId).Include(d=>d.Favorites).FirstOrDefaultAsync();
+            var user = await data.Users.Where(d => d.Id == userId).Include(d => d.Favorites).FirstOrDefaultAsync();
 
-            var recipe = await data.Recipes.Where(d => d.Id == recipeId).FirstOrDefaultAsync();
+            var recipe = await data.Recipes.Where(d => d.Id == recipeId)
+                .Include(d => d.Ingredients).Include(d => d.Spices)
+                .FirstOrDefaultAsync();
             if (user != null)
             {
                 var userFavs = user.Favorites.ToList();
-                var containsThisRecipe =  user.Favorites.Select(d=>d.Id == recipeId).FirstOrDefault();
+                var containsThisRecipe = user.Favorites.Select(d => d.Id == recipeId).FirstOrDefault();
                 if (!containsThisRecipe)
                 {
                     userFavs.Add(recipe);
                     user.Favorites = userFavs;
-                    await data.SaveChangesAsync(); 
-                }          
+                    await data.SaveChangesAsync();
+                }
             }
-           
+
         }
 
-    
+        /// <summary>
+        /// Премахва на текущия юзър рецепта от любими
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
+        public async Task RemoveFromFavorites(string userId, int recipeId)
+        {
+            var user = await data.Users.Where(d => d.Id == userId).Include(d => d.Favorites).FirstOrDefaultAsync();
+            if (user != null)
+            {
+                var crtRecipe = await data.Recipes
+                .Where(d => d.Id == recipeId)
+                .Include(d => d.Ingredients)
+                .Include(d => d.Spices)
+                .FirstOrDefaultAsync();
+
+                var userFavs = user.Favorites.ToList();
+                userFavs.Remove(crtRecipe);
+                user.Favorites = userFavs;
+                await data.SaveChangesAsync();
+            }
+
+        }
+
+
         public Task AddToPreparings(string userId, int recipeId)
         {
             throw new NotImplementedException();
         }
-    }    
-    
+
+        public Task<IEnumerable<RecipeViewModel>> GetPrepairingsRecipes(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveFromPreparings(string userId, int recipeId)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

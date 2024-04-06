@@ -99,6 +99,23 @@ namespace Mezeta.Controllers
             return RedirectToAction("Favorites", "Main");
         }
 
+        /// <summary>
+        /// Премахва рецепта от списъка с любими
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromFavorites(int recipeId)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account", new { area = "Identity" });
+            }
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await recipeService.RemoveFromFavorites(userId, recipeId);
+
+            return RedirectToAction("Favorites", "Main");
+        }
+
         public IActionResult Calculation()
         {
             return View();
