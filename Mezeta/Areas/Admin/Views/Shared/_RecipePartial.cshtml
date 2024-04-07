@@ -6,7 +6,9 @@
             <input type="hidden" asp-for="@Model.Id" />
             <div class="card mb-3">
                 <div class="btn-group" role="group">
-                    <a asp-area="Admin" asp-controller="Add" asp-action="AddListIngredient" class="btn btn-outline-primary">Добави продуктите за рецептата</a>
+                    <a asp-area="Admin" asp-controller="Add" asp-action="AddListIngredient"
+                    asp-route-title="@Model.Name" 
+                    class="btn btn-outline-primary">Добави продуктите за рецептата</a>
                     <span asp-validation-for="Ingredients" class="small text-danger"></span>
 
                     <a asp-area="Admin" asp-controller="Add" asp-action="AddListSpice" class="btn btn-outline-primary">Добави подправките за рецептата</a>

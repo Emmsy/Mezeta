@@ -32,7 +32,7 @@ namespace Mezeta.Areas.Admin.Controllers
                 Ingredients = listofIngredients,
                 Spices = listofSpices
             };
-            tempRecipe = new RecipeViewModel();
+          
 
             return View(model);
         }
@@ -137,8 +137,9 @@ namespace Mezeta.Areas.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> AddListIngredient()
-        {
+        public async Task<IActionResult> AddListIngredient(string title)
+        { 
+            tempRecipe.Name = title;
 
             var model = new IngredientViewModel()
             {
@@ -206,6 +207,37 @@ namespace Mezeta.Areas.Admin.Controllers
             listofSpices.Add(crt);
 
             return RedirectToAction("AddListSpice", "Add", new { area = "Admin" });
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteSpiceFromList(int id, double quantity, int measureId)
+        {
+
+            var crt = listofSpices
+                .Where(x => x.SpiceId == id
+                && x.Quantity == quantity
+                && x.MeasureId == measureId)
+                .FirstOrDefault();
+
+            listofSpices.Remove(crt);
+
+            return RedirectToAction("AddListSpice", "Add", new { area = "Admin" });
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteIngredientFromList(int id, double quantity, int measureId)
+        {
+            var crt = listofIngredients
+                .Where(x => x.IngredientId==id 
+                && x.Quantity==quantity 
+                && x.MeasureId==measureId)
+                .FirstOrDefault();
+
+            listofIngredients.Remove(crt);
+
+            return RedirectToAction("AddListIngredient", "Add", new { area = "Admin" });
         }
 
         /// <summary>

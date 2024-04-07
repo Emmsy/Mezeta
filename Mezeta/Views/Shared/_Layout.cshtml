@@ -22,12 +22,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                         </li>
-                        @if (this.User.Identity?.IsAuthenticated==true)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Favorites">Любими рецепти</a>
-                            </li>
-                        }
+
+                       
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Home" asp-controller="Main" asp-action="AllRecipes" class="btn btn-outline-primary">Рецепти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Home" asp-controller="Main" asp-action="AllIngredients" class="btn btn-outline-primary">Продукти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Home" asp-controller="Main" asp-action="AllSpices" class="btn btn-outline-primary">Подправки</a>
+                        </li>
+
+
                         @if (this.User.Identity?.IsAuthenticated == true && this.User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -35,6 +42,26 @@
                             </li>
                         }
                     </ul>
+
+                    @if (this.User.Identity?.IsAuthenticated == true)
+                    {
+
+                        <div class="dropdown">
+                            <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Мои рецепти
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Favorites">Любими</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Prepairings">Зреещи</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    }
                     <partial name="_LoginPartial" />
                 </div>
             </div>

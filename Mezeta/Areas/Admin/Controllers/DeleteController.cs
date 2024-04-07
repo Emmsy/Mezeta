@@ -1,4 +1,5 @@
 ﻿using Mezeta.Core.Contracts.Admin;
+using Mezeta.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mezeta.Areas.Admin.Controllers
@@ -6,6 +7,7 @@ namespace Mezeta.Areas.Admin.Controllers
     public class DeleteController : BaseController
     {
         private readonly IAdminRecipeService adminRecipeService;
+     
 
         public DeleteController(IAdminRecipeService _adminRecipeService)
         {
@@ -52,5 +54,7 @@ namespace Mezeta.Areas.Admin.Controllers
 
             return RedirectToAction("AllSpices", "Main", new { area = "Home" });
         }
+
+
     }
 }

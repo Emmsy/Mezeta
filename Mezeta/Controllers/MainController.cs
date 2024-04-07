@@ -71,7 +71,7 @@ namespace Mezeta.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Favorites()
+        public async Task<IActionResult> Favorites() 
         {
             if (!User.Identity.IsAuthenticated)
             {

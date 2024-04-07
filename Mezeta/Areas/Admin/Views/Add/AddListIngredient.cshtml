@@ -48,9 +48,13 @@
                 <div class="d-inline-flex p-2">
                     <p>@msg.IngredientName @msg.Quantity @msg.MeasureUnit</p>
 
-                    <form class="input-group-sm" asp-area="Admin" asp-controller="Add"
-                          asp-action="DeleteIngredientFromList" asp-route-id="" method="get">
-                        <button class="btn btn-danger mt-3" type="submit">Изтрий</button>
+                    <form class="input-group-sm"
+                          asp-route-id=@msg.IngredientId
+                          asp-route-quantity=@msg.Quantity
+                          asp-route-measureId=@msg.MeasureId
+                          asp-area="Admin" asp-controller="Add" asp-action="DeleteIngredientFromList" method="post"
+                          onclick="return confirm('Искате ли да изтриете продукта')">
+                        <input type="submit" value="Изтрий" class="fs-6 btn btn-danger mb-3 p-2" />
                     </form>
 
                 </div>
