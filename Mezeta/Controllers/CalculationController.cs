@@ -23,14 +23,25 @@ namespace Mezeta.Controllers
         }
 
 
-        [HttpGet]
-        public Task<IActionResult> AddToPrepairings(int recipeId)
-        {
-
-            return null;
-        }
         [HttpPost]
-        public Task<IActionResult> AddToPrepairings(RecipeIngredientViewModel model)
+        public async Task<IActionResult> AddToPrepairings(int recipeId)
+        {
+            var recipe = await recipeService.GetRecipe(recipeId);
+            var recipePrepairings = new RecipePrepairViewModel()
+            {
+                RecipeId = recipeId,
+                Recipe = recipe,
+                RawQuantity = 1,
+                StartDate = DateTime.Now,
+                ExpectedQuantity = 0.55
+            };
+
+            return View(recipePrepairings);
+        }
+
+
+        [HttpPost]
+        public Task<IActionResult> CalculateRecipe(RecipePrepairViewModel model)
         {
 
             return null;

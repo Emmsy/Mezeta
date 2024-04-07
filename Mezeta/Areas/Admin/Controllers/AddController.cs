@@ -209,7 +209,13 @@ namespace Mezeta.Areas.Admin.Controllers
             return RedirectToAction("AddListSpice", "Add", new { area = "Admin" });
         }
 
-
+        /// <summary>
+        /// изтрива подправка от листа преди създаването на рецептата
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="quantity"></param>
+        /// <param name="measureId"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult DeleteSpiceFromList(int id, double quantity, int measureId)
         {
@@ -225,7 +231,13 @@ namespace Mezeta.Areas.Admin.Controllers
             return RedirectToAction("AddListSpice", "Add", new { area = "Admin" });
         }
 
-
+        /// <summary>
+        /// изтрива продукт от листа преди създаването на рецептата
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="quantity"></param>
+        /// <param name="measureId"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult DeleteIngredientFromList(int id, double quantity, int measureId)
         {

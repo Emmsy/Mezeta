@@ -1,5 +1,6 @@
 ﻿using Mezeta.Core.Contracts;
 using Mezeta.Core.Models;
+using Mezeta.Infrastructure.Data.Entities;
 using Mezeta.Infrastrucute.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -182,9 +183,69 @@ namespace Mezeta.Core.Services
 
         }
 
-
-        public Task AddToPreparings(string userId, int recipeId)
+        public async Task<RecipeViewModel> GetRecipe(int recipeId)
         {
+            var result = new RecipeViewModel(); 
+
+            var recipe = await data.Recipes
+                .Where(d => d.Id == recipeId)
+                .Include(d => d.Ingredients)
+                .Include(d => d.Spices)
+                .FirstOrDefaultAsync();
+
+            var crtIngredients = new List<RecipeIngredientViewModel>();
+            var crtSpices = new List<RecipeSpiceViewModel>();
+            if (recipe != null)
+            {
+
+                foreach (var item in recipe.Ingredients)
+                {
+                    var crtIngr = new RecipeIngredientViewModel()
+                    {
+                        IngredientId = item.IngredientId,
+                        IngredientName = await data.Ingredients.Where(d => d.Id == item.IngredientId).Select(d => d.Name).FirstOrDefaultAsync(),
+                        Quantity = item.Quantity,
+                        MeasureId = item.MeasureId,
+                        MeasureUnit = await data.Measures.Where(d => d.Id == item.MeasureId).Select(d => d.Unit).FirstOrDefaultAsync(),
+                    };
+                    crtIngredients.Add(crtIngr);
+                }
+
+                foreach (var item in recipe.Spices)
+                {
+                    var crtSpice = new RecipeSpiceViewModel()
+                    {
+                        SpiceId = item.SpiceId,
+                        SpiceName = await data.Spices.Where(d => d.Id == item.SpiceId).Select(d => d.Name).FirstOrDefaultAsync(),
+                        Quantity = item.Quantity,
+                        MeasureId = item.MeasureId,
+                        MeasureUnit = await data.Measures.Where(d => d.Id == item.MeasureId).Select(d => d.Unit).FirstOrDefaultAsync(),
+                    };
+                    crtSpices.Add(crtSpice);
+                }
+
+                result = new RecipeViewModel()
+                {
+                    Id = recipe.Id,
+                    Name = recipe.Name,
+                    Description = recipe.Description,
+                    ImageUrl = recipe.ImageUrl,
+                    Ingredients = crtIngredients,
+                    Spices = crtSpices
+
+                };
+            }
+
+            return result;
+        }
+        public async Task<RecipePrepairViewModel> AddToPreparings(string userId, int recipeId)
+        {
+            var user = await data.Users.Where(d => d.Id == userId).Include(d => d.Prepairing).FirstOrDefaultAsync();
+            var crtRecipe = await data.Recipes
+                .Where(d => d.Id == recipeId)
+                .Include(d => d.Ingredients)
+                .Include(d => d.Spices)
+                .FirstOrDefaultAsync();
             throw new NotImplementedException();
         }
 
@@ -197,6 +258,8 @@ namespace Mezeta.Core.Services
         {
             throw new NotImplementedException();
         }
+
+      
     }
 
 }
