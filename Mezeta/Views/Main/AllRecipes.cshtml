@@ -49,7 +49,7 @@ else
                             <input type="submit" value="Add to Favorites" class="fs-6 btn btn-success mb-3 p-2" />
                         </form>
 
-                        <form class="input-group-sm" asp-route-recipeId="@recipe.Id" asp-controller="Calculation" asp-action="AddToPrepairings" method="post">
+                        <form class="input-group-sm" asp-route-id="@recipe.Id" asp-controller="Calculation" asp-action="CalculationsRecipe" method="get">
                             <input type="submit" value="Add to Prepairing" class="fs-6 btn btn-success mb-3 p-2" />
                         </form>
 

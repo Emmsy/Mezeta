@@ -19,8 +19,8 @@ namespace Mezeta.Core.Contracts
         Task AddToFavorites(string userId, int recipeId);
         Task RemoveFromFavorites(string userId, int recipeId);
 
-        Task<IEnumerable<RecipeViewModel>> GetPrepairingsRecipes(string userId);
-        Task<RecipePrepairViewModel> AddToPreparings(string userId, int recipeId);
+        Task<IEnumerable<RecipePrepairViewModel>> GetPrepairingsRecipes(string userId);
+        Task<RecipePrepairViewModel> AddToPreparings(string userId, RecipePrepairViewModel model);
         Task RemoveFromPreparings(string userId, int recipeId);
 
     }

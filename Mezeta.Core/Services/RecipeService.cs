@@ -9,6 +9,7 @@ namespace Mezeta.Core.Services
     public class RecipeService : IRecipeService
     {
         private readonly ApplicationDbContext data;
+        private static readonly List<RecipePrepairViewModel> prepairsList = new List<RecipePrepairViewModel>();
 
         public RecipeService(ApplicationDbContext _data)
         {
@@ -238,18 +239,35 @@ namespace Mezeta.Core.Services
 
             return result;
         }
-        public async Task<RecipePrepairViewModel> AddToPreparings(string userId, int recipeId)
+        public async Task<RecipePrepairViewModel> AddToPreparings(string userId, RecipePrepairViewModel model)
         {
             var user = await data.Users.Where(d => d.Id == userId).Include(d => d.Prepairing).FirstOrDefaultAsync();
-            var crtRecipe = await data.Recipes
-                .Where(d => d.Id == recipeId)
-                .Include(d => d.Ingredients)
-                .Include(d => d.Spices)
-                .FirstOrDefaultAsync();
-            throw new NotImplementedException();
+            var crtRecipe = await data.RecipesPrepairings
+                .Where(d => d.UserId == userId)
+                .ToListAsync();
+            user.Prepairing= crtRecipe;
+            
+            var crtPrep = new RecipePrepairing()
+            {
+                StartDate = model.StartDate,
+                RawQuantity=model.RawQuantity,
+                RecipeId = model.RecipeId,
+                Recipe=new Recipe()
+                {
+                    Id=model.RecipeId,
+                    ImageUrl=model.Recipe.ImageUrl,
+                    Description=model.Recipe.Description,
+                    Name = model.Recipe.Name,
+                    Spices=model.Recipe.Spices,
+                    Ingredients=model.Recipe.Ingredients
+                },
+
+
+            }
+
         }
 
-        public Task<IEnumerable<RecipeViewModel>> GetPrepairingsRecipes(string userId)
+        public Task<IEnumerable<RecipePrepairViewModel>> GetPrepairingsRecipes(string userId)
         {
             throw new NotImplementedException();
         }
