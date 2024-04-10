@@ -100,9 +100,9 @@ namespace Mezeta.Core.Services
             var user = await data.Users.Where(d => d.Id == userId).Include(d => d.Favorites).FirstOrDefaultAsync();
             var recipeIds = user.Favorites.Select(d => d.Id).ToList();
 
-            var allRecipes =  data.Recipes.Include(i => i.Ingredients).Include(s => s.Spices).Where(t => recipeIds.Contains(t.Id));
+            var allRecipes = data.Recipes.Include(i => i.Ingredients).Include(s => s.Spices).Where(t => recipeIds.Contains(t.Id));
 
-            var result = await   allRecipes.Select(d => new RecipeViewModel()
+            var result = await allRecipes.Select(d => new RecipeViewModel()
             {
                 Id = d.Id,
                 Name = d.Name,
@@ -184,9 +184,14 @@ namespace Mezeta.Core.Services
 
         }
 
+        /// <summary>
+        /// дърпа рецепта от базата и я мапва във вид за вюто
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
         public async Task<RecipeViewModel> GetRecipe(int recipeId)
         {
-            var result = new RecipeViewModel(); 
+            var result = new RecipeViewModel();
 
             var recipe = await data.Recipes
                 .Where(d => d.Id == recipeId)
@@ -239,45 +244,108 @@ namespace Mezeta.Core.Services
 
             return result;
         }
-        public async Task<RecipePrepairViewModel> AddToPreparings(string userId, RecipePrepairViewModel model)
+
+        /// <summary>
+        /// прибавя на потребителя рецепта в списъка със зреещи мезета
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task AddToPreparings(string userId, RecipePrepairViewModel model)
         {
             var user = await data.Users.Where(d => d.Id == userId).Include(d => d.Prepairing).FirstOrDefaultAsync();
-            var crtRecipe = await data.RecipesPrepairings
+            var crtPrepaioringsRecipes = await data.RecipesPrepairings
                 .Where(d => d.UserId == userId)
                 .ToListAsync();
-            user.Prepairing= crtRecipe;
-            
-            var crtPrep = new RecipePrepairing()
+            if (user != null)
             {
-                StartDate = model.StartDate,
-                RawQuantity=model.RawQuantity,
-                RecipeId = model.RecipeId,
-                Recipe=new Recipe()
+
+                var crtIngredients = model.Recipe.Ingredients.Select(d => new RecipeIngredient()
                 {
-                    Id=model.RecipeId,
-                    ImageUrl=model.Recipe.ImageUrl,
-                    Description=model.Recipe.Description,
-                    Name = model.Recipe.Name,
-                    Spices=model.Recipe.Spices,
-                    Ingredients=model.Recipe.Ingredients
-                },
+                    IngredientId = d.IngredientId,
+                    Ingredient = data.Ingredients.Where(s => s.Id == d.IngredientId).FirstOrDefault(),
+                    Quantity = d.Quantity,
+                    MeasureId = d.MeasureId,
+                    UnitOfMeasure = data.Measures.Where(s => s.Id == d.MeasureId).FirstOrDefault(),
+                }).ToList();
 
+                var crtSpices = model.Recipe.Spices.Select(d => new RecipeSpice()
+                {
+                    SpiceId = d.SpiceId,
+                    Spice = data.Spices.Where(s => s.Id == d.SpiceId).FirstOrDefault(),
+                    Quantity = d.Quantity,
+                    MeasureId = d.MeasureId,
+                    UnitOfMeasure = data.Measures.Where(s => s.Id == d.MeasureId).FirstOrDefault(),
+                }).ToList();
 
+                var crtPrep = new RecipePrepairing()
+                {
+                    StartDate = model.StartDate,
+                    RawQuantity = model.RawQuantity,
+                    RecipeId = model.RecipeId,
+                    //Recipe = data.Recipes.Where(s => s.Id == model.RecipeId).FirstOrDefault(),
+                    ExpectedQuantity = model.ExpectedQuantity,
+                };
+
+                crtPrepaioringsRecipes.Add(crtPrep);
+                user.Prepairing = crtPrepaioringsRecipes;
+                await data.SaveChangesAsync();
             }
-
         }
 
-        public Task<IEnumerable<RecipePrepairViewModel>> GetPrepairingsRecipes(string userId)
+        public async Task<IEnumerable<RecipePrepairViewModel>> GetPrepairingsRecipes(string userId)
         {
-            throw new NotImplementedException();
+            var crtPrepaioringsRecipes = await data.RecipesPrepairings
+               .Where(d => d.UserId == userId)
+               .Select(s => new RecipePrepairViewModel()
+               {
+                   Id = s.Id,
+                   RecipeId = s.RecipeId,
+                   Recipe = new RecipeViewModel()
+                   {
+                       Name = s.Recipe.Name,
+                       Description = s.Recipe.Description,
+                       ImageUrl = s.Recipe.ImageUrl,
+                       Ingredients = s.Recipe.Ingredients.Select(i => new RecipeIngredientViewModel()
+                       {
+                           IngredientId = i.IngredientId,
+                           IngredientName = data.Ingredients.Where(f => f.Id == i.IngredientId).Select(s => s.Name).FirstOrDefault(),
+                           MeasureId = i.MeasureId,
+                           MeasureUnit = data.Measures.Where(f => f.Id == i.MeasureId).Select(s => s.Unit).FirstOrDefault(),
+                           Quantity = i.Quantity,
+                       }),
+
+                       Spices = s.Recipe.Spices.Select(i => new RecipeSpiceViewModel()
+                       {
+                           SpiceId = i.SpiceId,
+                           SpiceName = data.Spices.Where(f => f.Id == i.SpiceId).Select(s => s.Name).FirstOrDefault(),
+                           MeasureId = i.MeasureId,
+                           MeasureUnit = data.Measures.Where(f => f.Id == i.MeasureId).Select(s => s.Unit).FirstOrDefault(),
+                           Quantity = i.Quantity,
+                       }),
+
+                   },
+                   StartDate = s.StartDate,
+                   RawQuantity = s.RawQuantity,
+                   ExpectedQuantity = s.ExpectedQuantity,
+
+               })
+               .ToListAsync();
+
+
+            return crtPrepaioringsRecipes;
+
         }
 
-        public Task RemoveFromPreparings(string userId, int recipeId)
+        public async Task RemoveFromPreparings(int id)
         {
-            throw new NotImplementedException();
+            var crtRecipePreperings = await data.RecipesPrepairings.Where(f => f.Id == id).FirstOrDefaultAsync();
+            data.RecipesPrepairings.Remove(crtRecipePreperings);
+            await data.SaveChangesAsync();
+
         }
 
-      
+
     }
 
 }

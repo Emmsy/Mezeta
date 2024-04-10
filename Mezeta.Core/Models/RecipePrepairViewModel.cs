@@ -5,7 +5,7 @@ namespace Mezeta.Core.Models
 {
     public class RecipePrepairViewModel
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public int RecipeId { get; set; }
@@ -16,7 +16,8 @@ namespace Mezeta.Core.Models
         [Precision(18, 2)]
         public double RawQuantity { get; set; }
 
-        [Required] 
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; } 
 
         [Precision(18, 2)]

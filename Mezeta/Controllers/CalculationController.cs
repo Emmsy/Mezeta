@@ -15,15 +15,18 @@ namespace Mezeta.Controllers
     {
         private readonly IRecipeService recipeService;
         private static RecipePrepairViewModel recipePrepairings = new RecipePrepairViewModel();
-        private static double crtRaw = 1;
-        private static DateTime startDate = DateTime.Now;
-
 
         public CalculationController(IRecipeService _recipeService)
         {
             recipeService = _recipeService;
         }
 
+        /// <summary>
+        /// калкулира рецептата с нужните количества
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> CalculationsRecipe(int id)
         {
@@ -43,53 +46,19 @@ namespace Mezeta.Controllers
             return View(recipePrepairings);
         }
 
-
+        /// <summary>
+        /// калкулира рецептата с нужните количества
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CalculationsRecipe(int id,RecipePrepairViewModel model)
         {
- 
             var recipe = await recipeService.GetRecipe(id);
 
-            var calculateIngredients = new List<RecipeIngredientViewModel>();
-            foreach (var ing in recipe.Ingredients)
-            {
-                var crtIng = new RecipeIngredientViewModel()
-                {
-                    IngredientId = ing.IngredientId,
-                    MeasureId = ing.MeasureId,
-                    IngredientName = ing.IngredientName,
-                    MeasureUnit = ing.MeasureUnit,
-                    Quantity = (ing.Quantity * model.RawQuantity),
-                };
-
-                calculateIngredients.Add(crtIng);
-            }
-
-            var calculateSpices = new List<RecipeSpiceViewModel>();
-            foreach (var sp in recipe.Spices)
-            {
-                var crtSp = new RecipeSpiceViewModel()
-                {
-                    SpiceId = sp.SpiceId,
-                    SpiceName = sp.SpiceName,
-                    MeasureId = sp.MeasureId,
-                    MeasureUnit = sp.MeasureUnit,
-                    Quantity = (sp.Quantity * model.RawQuantity),
-                };
-                calculateSpices.Add(crtSp);
-            }
-
-            var calculateRecipe = new RecipeViewModel()
-            {
-                Id = recipe.Id,
-                Name = recipe.Name,
-                Description = recipe.Description,
-                ImageUrl = recipe.ImageUrl,
-                Ingredients = calculateIngredients,
-                Spices = calculateSpices,
-            };
             model.RecipeId = recipe.Id;
-            model.Recipe = calculateRecipe;
+            model.Recipe = recipe;
             model.ExpectedQuantity = Math.Round((model.RawQuantity * 0.55),2);
 
             recipePrepairings = model;
@@ -113,8 +82,6 @@ namespace Mezeta.Controllers
             return View(model);
         }
 
-
-
         /// <summary>
         /// добавя рецепта в списъка които се приготвят
         /// </summary>
@@ -132,12 +99,27 @@ namespace Mezeta.Controllers
                 await recipeService.AddToPreparings(userId, recipePrepairings);
             }
 
-
-
             return RedirectToAction("Prepairings", "Calculation");
-
         }
 
+
+             /// <summary>
+        /// премахва рецепта в списъка които се приготвят
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromPreparings(int id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account", new { area = "Identity" });
+            }
+
+                await recipeService.RemoveFromPreparings(id);
+          
+
+            return RedirectToAction("Prepairings", "Calculation");
+        }
 
     }
 }

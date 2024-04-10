@@ -1,0 +1,61 @@
+﻿@model List<RecipePrepairViewModel>
+
+@{
+    ViewData["Title"] = "Списък зреещи";
+
+}
+
+<div class="container text-center">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
+
+    <div class="text-center row">
+
+        @foreach (var prep in Model)
+        {
+
+            <div class="card col-4" style="width: 50%;">
+                <img class="card-img-top"
+                     src="@prep.Recipe.ImageUrl" alt="Recipe Image">
+                <div class="card-body te">
+
+                    <h4 class="card-title mt-1">@prep.Recipe.Name</h4>
+                    <hr />
+                    <h5>Необходими продукти: </h5>
+                    @foreach (var ing in prep.Recipe.Ingredients)
+                    {
+                        <p>@ing.IngredientName : @Math.Round(ing.Quantity * prep.RawQuantity, 2) @ing.MeasureUnit</p>
+
+                    }
+
+                    @foreach (var sp in prep.Recipe.Spices)
+                    {
+                        <p>@sp.SpiceName : @Math.Round(sp.Quantity * prep.RawQuantity, 2) @sp.MeasureUnit</p>
+
+                    }
+
+                    <hr />
+
+                    <div class="input-group mb-3">
+                        <p style="font-size: 1.5rem" >Заложено сурово количество : <b>@Math.Round(prep.RawQuantity, 2)</b> кг.</p>
+                        <p style="font-size: 1.5rem">Очаквано количество : <b>@Math.Round(prep.ExpectedQuantity, 2)</b> кг.</p>          
+                        <p p style="font-size: 1.5rem">Дата на залагане : <b>@prep.StartDate.Date.ToShortDateString()</b></p>
+                      
+                    </div>
+
+                </div>
+
+                <form class="input-group-sm" asp-route-id="@prep.Id" asp-controller="Calculation" asp-action="RemoveFromPreparings" method="post">
+                    <input type="submit" value="Премахни" class="fs-6 btn btn-success mb-3 p-2" />
+                </form>
+
+            </div>
+        }
+    </div>
+
+</div>
+</div>
+</div>
+
+
+

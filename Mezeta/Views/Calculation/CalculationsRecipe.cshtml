@@ -33,59 +33,49 @@
                         <input class="btn btn-primary mt-3" type="submit" value="Калкулирай" />
                     </div>
 
- 
-
                     <div class="input-group mb-3">
-                        <label asp-for="ExpectedQuantity" class="input-group-text" for="startDate">Очаквано количество</label>
-                        <input asp-for="ExpectedQuantity" id="startDate" class="form-control" disabled>
+                        <label asp-for="ExpectedQuantity" class="input-group-text">Очаквано количество</label>
+                        <input asp-for="ExpectedQuantity" class="form-control" disabled>
                         <span asp-validation-for="StartDate" class="small text-danger"></span>
                     </div>
-
 
                 </div>
 
             </form>
-                <div class="card col-4" style="width: 50%;">
-                    <img class="card-img-top"
-                         src="@Model.Recipe.ImageUrl" alt="Recipe Image">
-                    <div class="card-body te">
+            <div class="card col-4" style="width: 50%;">
+                <img class="card-img-top"
+                     src="@Model.Recipe.ImageUrl" alt="Recipe Image">
+                <div class="card-body te">
 
-                        <h4 class="card-title mt-1">@Model.Recipe.Name</h4>
-                        <hr />
-                        <h5>Необходими продукти: </h5>
-                        @foreach (var ing in Model.Recipe.Ingredients)
-                        {
-                            <p>@ing.IngredientName : @Math.Round(ing.Quantity, 2) @ing.MeasureUnit</p>
+                    <h4 class="card-title mt-1">@Model.Recipe.Name</h4>
+                    <hr />
+                    <h5>Необходими продукти: </h5>
+                    @foreach (var ing in Model.Recipe.Ingredients)
+                    {
+                        <p>@ing.IngredientName : @Math.Round(ing.Quantity * Model.RawQuantity, 2) @ing.MeasureUnit</p>
 
-                        }
+                    }
 
-                        @foreach (var sp in Model.Recipe.Spices)
-                        {
-                            <p>@sp.SpiceName : @Math.Round(sp.Quantity, 2) @sp.MeasureUnit</p>
+                    @foreach (var sp in Model.Recipe.Spices)
+                    {
+                        <p>@sp.SpiceName : @Math.Round(sp.Quantity * Model.RawQuantity, 2) @sp.MeasureUnit</p>
 
-                        }
-                        <br />
-                        <h5 class="mb-0 card-text">Начин на приготвяне:</h5>
-                        <br />
-                        <p class="mb-0"> @Model.Recipe.Description</p>
-                    </div>
-
-                   @*  <div class="btn-group" style="justify-content: space-around">
-                        <div class="text-center">
-                            <input class="btn btn-primary mt-3" type="submit" value="Запази рецептата" />
-                        </div> *@
-
-                    @* <a asp-area="Home" asp-controller="Calculation" asp-action="AddToPrepairings" class="btn btn-outline-primary">Добави в зреещи</a> *@
-
-                         <form class="input-group-sm" asp-controller="Calculation" asp-action="AddToPrepairings" method="post">
-                        <input type="submit" value="Добави в зреещи" class="fs-6 btn btn-success mb-3 p-2" />
-                        </form>
-
-                    </div>
+                    }
+                    <br />
+                    <h5 class="mb-0 card-text">Начин на приготвяне:</h5>
+                    <br />
+                    <p class="mb-0"> @Model.Recipe.Description</p>
                 </div>
-           
+
+                <form class="input-group-sm" asp-controller="Calculation" asp-action="AddToPrepairings" method="post">
+                    <input type="submit" value="Добави в зреещи" class="fs-6 btn btn-success mb-3 p-2" />
+                </form>
+
+            </div>
         </div>
+
     </div>
+</div>
 </div>
 
 

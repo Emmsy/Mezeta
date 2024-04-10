@@ -8,10 +8,10 @@
                 <div class="btn-group" role="group">
                     <a asp-area="Admin" asp-controller="Add" asp-action="AddListIngredient"
                     asp-route-title="@Model.Name" 
-                    class="btn btn-outline-primary">Добави продуктите за рецептата</a>
+                    class="btn btn-outline-primary">Добави/редактирай продуктите за рецептата</a>
                     <span asp-validation-for="Ingredients" class="small text-danger"></span>
 
-                    <a asp-area="Admin" asp-controller="Add" asp-action="AddListSpice" class="btn btn-outline-primary">Добави подправките за рецептата</a>
+                    <a asp-area="Admin" asp-controller="Add" asp-action="AddListSpice" class="btn btn-outline-primary">Добави/редактирай подправките за рецептата</a>
                     <span asp-validation-for="Spices" class="small text-danger"></span>
                 </div>
             </div>
