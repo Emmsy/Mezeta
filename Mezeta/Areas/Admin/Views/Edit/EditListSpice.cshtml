@@ -1,0 +1,76 @@
+﻿@model SpiceViewModel
+
+
+<div class="form-group">
+    <form class="input-group-sm" asp-area="Admin" asp-controller="Edit"
+          asp-action="EditListSpice" asp-route-id="" method="post">
+
+        <label asp-for="SpiceId">Изберете продукт</label>
+        <select asp-for="SpiceId" class="form-control">
+            @foreach (var sp in Model.Spices)
+            {
+                <option value="@sp.Id">@sp.Name</option>
+            }
+
+        </select>
+        <span asp-validation-for="SpiceId" class="small text-danger"></span>
+
+
+        <div class="form-group">
+            <label asp-for="Quantity">Количество за 1 кг</label>
+            <input asp-for="Quantity" class="form-control" placeholder="0.00">
+            <span asp-validation-for="Quantity" class="small text-danger"></span>
+        </div>
+
+        <label asp-for="SpiceId">Мярка</label>
+        <select asp-for="MeasureId" class="form-control">
+            @foreach (var measure in Model.Measures)
+            {
+                <option value="@measure.Id">@measure.Unit</option>
+            }
+        </select>
+        <span asp-validation-for="MeasureId" class="small text-danger"></span>
+
+
+        <div class="text-center">
+            <input class="btn btn-primary mt-3" type="submit" value="Добави" />
+        </div>
+
+    </form>
+
+    @if (Model.AddedSpices.Any())
+    {
+        <h3>Добавени подправки!</h3>
+
+        @foreach (var msg in Model.AddedSpices)
+        {
+            <div class="card">
+                <div class="d-inline-flex p-2">
+                    <p>@msg.SpiceName @msg.Quantity @msg.MeasureUnit</p>
+
+                    <form class="input-group-sm"
+                          asp-route-id=@msg.SpiceId
+                          asp-route-quantity=@msg.Quantity
+                          asp-route-measureId=@msg.MeasureId
+                          asp-area="Admin" asp-controller="Edit" asp-action="DeleteSpiceFromList" method="post"
+                          onclick="return confirm('Искате ли да изтриете подправката')">
+                        <input type="submit" value="Изтрий" class="fs-6 btn btn-danger mb-3 p-2" />
+                    </form>
+
+                </div>
+            </div>
+        }
+        <form class="input-group-sm" asp-area="Admin" asp-controller="Edit"
+              asp-action="EditRecipe" asp-route-id="" method="get">
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Запази" />
+            </div>
+        </form>
+    }
+    else
+    {
+        <h3>Няма добавени подправки</h3>
+    }
+
+
+</div>

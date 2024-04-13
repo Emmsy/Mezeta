@@ -248,12 +248,39 @@ namespace Mezeta.Core.Services.Admin
         /// TO DO LIST OF INGREDIENTS AND SPICES TO BE EDITED AND CHANGE !!!!!
         public async Task EditRecipe(int id, RecipeViewModel recipe)
         {
-            var crtIngredients = new List<RecipeIngredient>();
-            var crtSpices = new List<RecipeSpice>();
-            var crtRecipe = data.Recipes.Where(data => data.Id == id).FirstOrDefault();
+            var crtIngredients = recipe.Ingredients.Select(d => new RecipeIngredient()
+            {
+               IngredientId=d.IngredientId,
+               Ingredient= data.Ingredients.Where(f=>f.Id==d.IngredientId).FirstOrDefault(),
+               Quantity = d.Quantity,
+               MeasureId=d.MeasureId,
+               UnitOfMeasure=data.Measures.Where(f=>f.Id==d.MeasureId).FirstOrDefault()
+       
+            }).ToList();
+
+            var crtSpices = recipe.Spices.Select(d => new RecipeSpice()
+            {
+                SpiceId = d.SpiceId,
+                Spice = data.Spices.Where(f => f.Id == d.SpiceId).FirstOrDefault(),
+                Quantity = d.Quantity,
+                MeasureId = d.MeasureId,
+                UnitOfMeasure = data.Measures.Where(f => f.Id == d.MeasureId).FirstOrDefault()
+
+            }).ToList();
+
+            var crtRecipe = data.Recipes
+                .Where(data => data.Id == id)
+                .Include(d=>d.Ingredients)
+                .Include(s=>s.Spices)
+                .FirstOrDefault();
+
+            crtRecipe.Ingredients=new List<RecipeIngredient>();
+            crtRecipe.Spices = new List<RecipeSpice>();
             crtRecipe.Name = recipe.Name;
             crtRecipe.Description = recipe.Description;
             crtRecipe.ImageUrl = recipe.ImageUrl;
+            crtRecipe.Ingredients = crtIngredients;
+            crtRecipe.Spices = crtSpices;
 
             await data.SaveChangesAsync();
         }
