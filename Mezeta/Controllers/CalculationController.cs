@@ -30,8 +30,9 @@ namespace Mezeta.Controllers
         [HttpGet]
         public async Task<IActionResult> CalculationsRecipe(int id)
         {
+           
             var recipe = await recipeService.GetRecipe(id);
-            if (recipePrepairings.RecipeId == 0)
+            if (recipePrepairings.RecipeId == 0 || recipePrepairings.RecipeId != id)
             {
                 recipePrepairings = new RecipePrepairViewModel()
                 {
@@ -42,6 +43,7 @@ namespace Mezeta.Controllers
                     ExpectedQuantity = 0.55
                 };
             }
+
 
             return View(recipePrepairings);
         }
