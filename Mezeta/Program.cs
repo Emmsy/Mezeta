@@ -38,10 +38,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Home/Error/500");
+    app.UseStatusCodePagesWithReExecute("Home/Error", "?statusCode={0}");
     app.UseHsts();
 }
 
@@ -52,10 +54,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.UseEndpoints(endpoints =>
 {
@@ -72,6 +70,5 @@ app.UseEndpoints(endpoints =>
 
 });
 
-//app.MapRazorPages();
 app.UseResponseCaching();
 app.Run();
