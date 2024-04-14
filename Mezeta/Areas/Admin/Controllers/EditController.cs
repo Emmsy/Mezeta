@@ -34,10 +34,14 @@ namespace Mezeta.Areas.Admin.Controllers
             }
         
             var model = await adminRecipeService.GetRecipe(crtId);
-            if(listofIngredients.Count>0 /*&& listofSpices.Count > 0*/)
+            if(listofIngredients.Count>0 )
             {
-                model.Ingredients = listofIngredients;
-                //model.Spices = listofSpices;
+                model.Ingredients = listofIngredients;         
+            }
+
+            if (listofSpices.Count > 0)
+            {
+                model.Spices = listofSpices;
             }
 
             tempRecipe = model;
