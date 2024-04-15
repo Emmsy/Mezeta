@@ -1,11 +1,7 @@
 ﻿using Mezeta.Core.Contracts;
 using Mezeta.Core.Models;
-using Mezeta.Core.Models.Admin;
-using Mezeta.Infrastructure.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 
 namespace Mezeta.Controllers
@@ -30,7 +26,6 @@ namespace Mezeta.Controllers
         [HttpGet]
         public async Task<IActionResult> CalculationsRecipe(int id)
         {
-           
             var recipe = await recipeService.GetRecipe(id);
             if (recipePrepairings.RecipeId == 0 || recipePrepairings.RecipeId != id)
             {
@@ -43,8 +38,6 @@ namespace Mezeta.Controllers
                     ExpectedQuantity = 0.55
                 };
             }
-
-
             return View(recipePrepairings);
         }
 
@@ -55,18 +48,15 @@ namespace Mezeta.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CalculationsRecipe(int id,RecipePrepairViewModel model)
+        public async Task<IActionResult> CalculationsRecipe(int id, RecipePrepairViewModel model)
         {
             var recipe = await recipeService.GetRecipe(id);
-
-            model.RecipeId = recipe.Id;
             model.Recipe = recipe;
-            model.ExpectedQuantity = Math.Round((model.RawQuantity * 0.55),2);
-
+            model.RecipeId = recipe.Id;
+            model.ExpectedQuantity = Math.Round((model.RawQuantity * 0.55), 2);
             recipePrepairings = model;
             return View(model);
         }
-
 
         /// <summary>
         /// показва списъка със рецепти които се приготвят
@@ -105,7 +95,7 @@ namespace Mezeta.Controllers
         }
 
 
-             /// <summary>
+        /// <summary>
         /// премахва рецепта в списъка които се приготвят
         /// </summary>
         /// <returns></returns>
@@ -117,8 +107,7 @@ namespace Mezeta.Controllers
                 return RedirectToAction("Login", "Account", new { area = "Identity" });
             }
 
-                await recipeService.RemoveFromPreparings(id);
-          
+            await recipeService.RemoveFromPreparings(id);
 
             return RedirectToAction("Prepairings", "Calculation");
         }

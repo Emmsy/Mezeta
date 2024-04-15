@@ -1,5 +1,4 @@
 ﻿using Mezeta.Core.Contracts.Admin;
-using Mezeta.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mezeta.Areas.Admin.Controllers

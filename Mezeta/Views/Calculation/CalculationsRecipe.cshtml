@@ -50,6 +50,7 @@
                     <h4 class="card-title mt-1">@Model.Recipe.Name</h4>
                     <hr />
                     <h5>Необходими продукти: </h5>
+
                     @foreach (var ing in Model.Recipe.Ingredients)
                     {
                         <p>@ing.IngredientName : @Math.Round(ing.Quantity * Model.RawQuantity, 2) @ing.MeasureUnit</p>
@@ -65,6 +66,7 @@
                     <h5 class="mb-0 card-text">Начин на приготвяне:</h5>
                     <br />
                     <p class="mb-0"> @Model.Recipe.Description</p>
+                   
                 </div>
 
                 <form class="input-group-sm" asp-controller="Calculation" asp-action="AddToPrepairings" method="post">

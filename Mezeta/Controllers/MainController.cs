@@ -1,5 +1,4 @@
 ﻿using Mezeta.Core.Contracts;
-using Mezeta.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -114,11 +113,6 @@ namespace Mezeta.Controllers
             await recipeService.RemoveFromFavorites(userId, recipeId);
 
             return RedirectToAction("Favorites", "Main");
-        }
-
-        public IActionResult Calculation()
-        {
-            return View();
         }
     }
 }

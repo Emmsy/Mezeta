@@ -10,6 +10,15 @@
 
 <partial name="~/Areas/Admin/Views/Shared/_RecipePartial.cshtml" />
 
+
+
+<form class="input-group-sm" asp-area="Admin" asp-controller="Add"
+      asp-action="ClearScreanForRecipe" asp-route-id="" method="post">
+    <div class="text-center">
+        <input class="btn btn-primary mt-3" type="submit" value="Изчисти всичко" />
+    </div>
+</form>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

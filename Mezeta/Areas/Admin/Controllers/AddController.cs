@@ -157,7 +157,15 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddListIngredient(IngredientViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
 
+                model.Ingredients = await adminRecipeService.GetAllIngredientsName();
+                model.Measures = await adminRecipeService.GetAllMeasures();
+                model.AddedIngredients = listofIngredients;
+                
+                return View(model);
+            }
             var crt = new RecipeIngredientViewModel()
             {
                 IngredientId = model.IngredientId,
@@ -195,6 +203,13 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddListSpice(SpiceViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                model.Spices = await adminRecipeService.GetAllSpicesName();
+                model.Measures = await adminRecipeService.GetAllMeasures();
+                model.AddedSpices = listofSpices;
+                return View(model);
+            }
 
             var crt = new RecipeSpiceViewModel()
             {
@@ -219,7 +234,6 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult DeleteSpiceFromList(int id, double quantity, int measureId)
         {
-
             var crt = listofSpices
                 .Where(x => x.SpiceId == id
                 && x.Quantity == quantity

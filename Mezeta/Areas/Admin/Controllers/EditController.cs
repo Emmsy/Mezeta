@@ -172,6 +172,15 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditListIngredient(IngredientViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+
+                model.Ingredients = await adminRecipeService.GetAllIngredientsName();
+                model.Measures = await adminRecipeService.GetAllMeasures();
+                model.AddedIngredients = listofIngredients;
+
+                return View(model);
+            }
 
             isIngredientsRecipeAdded = true;
 
@@ -199,6 +208,7 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult DeleteIngredientFromList(int id, double quantity, int measureId)
         {
+            isIngredientsRecipeAdded = true;
             var crt = listofIngredients
                 .Where(x => x.IngredientId == id
                 && x.Quantity == quantity
@@ -242,6 +252,13 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditListSpice(SpiceViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                model.Spices = await adminRecipeService.GetAllSpicesName();
+                model.Measures = await adminRecipeService.GetAllMeasures();
+                model.AddedSpices = listofSpices;
+                return View(model);
+            }
 
             isSpicesRecipeAdded = true;
 
@@ -269,6 +286,7 @@ namespace Mezeta.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult DeleteSpiceFromList(int id, double quantity, int measureId)
         {
+            isSpicesRecipeAdded = true;
             var crt = listofSpices
                 .Where(x => x.SpiceId == id
                 && x.Quantity == quantity
@@ -279,21 +297,5 @@ namespace Mezeta.Areas.Admin.Controllers
 
             return RedirectToAction("EditListSpice", "Edit", new { area = "Admin" });
         }
-        /// <summary>
-        /// Изчиства формата за попълване за добавяне на рецепта
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public IActionResult ClearScreanForRecipe()
-        {
-            listofIngredients = new List<RecipeIngredientViewModel>();
-            listofSpices = new List<RecipeSpiceViewModel>();
-            tempRecipe = new RecipeViewModel();
-            isIngredientsRecipeAdded = false;
-            isSpicesRecipeAdded = false;
-            return RedirectToAction("EditRecipe", "Edit", new { area = "Admin" });
-        }
-
-
     }
 }

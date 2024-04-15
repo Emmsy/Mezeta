@@ -14,6 +14,7 @@ namespace Mezeta.Core.Models
 
         [Required]
         [Precision(18, 2)]
+        [Range(0, double.MaxValue, ErrorMessage = "Стойността трябва да е положително число")]
         public double RawQuantity { get; set; }
 
         [Required]

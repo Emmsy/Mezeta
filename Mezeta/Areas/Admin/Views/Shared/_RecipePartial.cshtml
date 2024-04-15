@@ -51,9 +51,6 @@
             @if (Model.Ingredients.Any())
             {
                 <h3>Добавени продукти!</h3>
-
-                @*   <form class="input-group-sm" asp-area="Admin" asp-controller="Main"
-            asp-action="AddRecipe" asp-route-id="" method="post"> *@
                 @foreach (var ing in Model.Ingredients)
                 {
                     <div class="card">
@@ -65,18 +62,12 @@
                     </div>
                 }
 
-                @*  <div class="text-center">
-            <input class="btn btn-primary mt-3" type="submit" value="Редактирай" />
-            </div> *@
-                @*  </form> *@
             }
 
             @if (Model.Spices.Any())
             {
                 <h3>Добавени подправки!</h3>
-                @*
-            <form class="input-group-sm" asp-area="Admin" asp-controller="Main"
-            asp-action="AddRecipe" asp-route-id="" method="post"> *@
+ 
                 @foreach (var sp in Model.Spices)
                 {
                     <div class="card">
@@ -87,9 +78,7 @@
                         </div>
                     </div>
                 }
-
-
-                @*  </form> *@
+            
             }
 
             @if (!Model.Spices.Any() && !Model.Ingredients.Any())
@@ -101,26 +90,11 @@
             {
                 <span class="text-danger">@ViewBag.Message</span>
             }
-            @*  </form>
 
-
-            <form class="input-group-sm" asp-area="Admin" asp-controller="Edit"
-            asp-action="EditRecipe" asp-route-id="@Model.Id" method="post"> *@
             <div class="text-center">
                 <input class="btn btn-primary mt-3" type="submit" value="Запази рецептата" />
             </div>
         </form>
-        @*     <div class="text-center">
-        <input class="btn btn-primary mt-3" type="submit" value="Запази рецептата" />
-        </div> *@
 
-
-
-        <form class="input-group-sm" asp-area="Admin" asp-controller="Add"
-              asp-action="ClearScreanForRecipe" asp-route-id="" method="post">
-            <div class="text-center">
-                <input class="btn btn-primary mt-3" type="submit" value="Изчисти всичко" />
-            </div>
-        </form>
     </div>
 </div>
