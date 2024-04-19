@@ -81,7 +81,7 @@ namespace Mezeta.Core.Services.Admin
                 ImageUrl = ingredient.ImageUrl,
             };
 
-            await data.AddAsync(crtingredient);
+            await data.Ingredients.AddAsync(crtingredient);
             await data.SaveChangesAsync();
         }
 
@@ -99,7 +99,7 @@ namespace Mezeta.Core.Services.Admin
                 ImageUrl = spice.ImageUrl,
             };
 
-            await data.AddAsync(crtspice);
+            await data.Spices.AddAsync(crtspice);
             await data.SaveChangesAsync();
         }
 
