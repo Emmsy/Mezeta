@@ -1,19 +1,22 @@
-﻿using Mezeta.Core.Contracts.Admin;
+﻿using Mezeta.Core.Contracts;
+using Mezeta.Core.Contracts.Admin;
 using Mezeta.Core.Models;
 using Mezeta.Core.Models.Admin;
+using Mezeta.Core.Services;
 using Mezeta.Core.Services.Admin;
 using Mezeta.Infrastructure.Data.Entities;
 using Mezeta.Infrastrucute.Data;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 
 namespace Mezeta.UnitTests
 {
     [TestFixture]
-    public class MezetaAdminServiceTests
+    public class MezetaServicesTests
     {
         private IAdminRecipeService admineRecipeService;
+        private IRecipeService recipeService;
         private ApplicationDbContext applicationDbContext;
+
 
 
         [SetUp]
@@ -28,7 +31,25 @@ namespace Mezeta.UnitTests
             applicationDbContext.Database.EnsureDeleted();
             applicationDbContext.Database.EnsureCreated();
             admineRecipeService = new AdminRecipeService(applicationDbContext);
+            recipeService = new RecipeService(applicationDbContext);
+
+            var user = new User()
+            {
+                Id = "d6b69f13-5dbc-4219-8123-c8a7bb5a8d91",
+                Email = "em_ng@gmail.com",
+                PasswordHash = "$2y$10$KGA2HYYYdRz5X1DHeeDnzu5TAV0FmHuiXZMePGiKWfLMPCsRe55E.",
+                EmailConfirmed = false,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnabled = true,
+                AccessFailedCount = 0,
+                
+            };
+
+            applicationDbContext.Users.Add(user);
+            applicationDbContext.SaveChanges();
         }
+
 
         [Test]
         public async Task AddIngredientTest()
@@ -269,7 +290,15 @@ namespace Mezeta.UnitTests
         [Test]
         public async Task GetRecipesTest()
         {
-            await AddRecipesTest();
+            RecipeViewModel model = new RecipeViewModel()
+            {
+                Name = "Test",
+                Description = "Test Description",
+                ImageUrl = "",
+            };
+
+            await admineRecipeService.AddRecipes(model);
+
             var result = await admineRecipeService.GetRecipe(1);
 
             Assert.That(result.Name, Is.EqualTo("Test"));
@@ -280,8 +309,24 @@ namespace Mezeta.UnitTests
         [Test]
         public async Task EditRecipesTest()
         {
-            await AddRecipesTest();
             RecipeViewModel model = new RecipeViewModel()
+            {
+                Name = "Test",
+                Description = "Test Description",
+                ImageUrl = "",
+            };
+
+            await admineRecipeService.AddRecipes(model);
+
+            model = new RecipeViewModel()
+            {
+                Name = "Test2",
+                Description = "Test Description2",
+                ImageUrl = "",
+            };
+            await admineRecipeService.AddRecipes(model);
+
+             model = new RecipeViewModel()
             {
                 Name = "Edited Name",
                 Description = "Test Description-Edit",
@@ -301,17 +346,99 @@ namespace Mezeta.UnitTests
         [Test]
         public async Task DeleteRecipeTest()
         {
-            await AddRecipesTest();
+            RecipeViewModel model = new RecipeViewModel()
+            {
+                Name = "Test",
+                Description = "Test Description",
+                ImageUrl = "",
+            };
 
-            Assert.That(applicationDbContext.Recipes.Count(), Is.EqualTo(1));
+            await admineRecipeService.AddRecipes(model);
+
+            model = new RecipeViewModel()
+            {
+                Name = "Test2",
+                Description = "Test Description2",
+                ImageUrl = "",
+            };
+            await admineRecipeService.AddRecipes(model);
+
+            Assert.That(applicationDbContext.Recipes.Count(), Is.EqualTo(2));
 
             await admineRecipeService.DeleteRecipe(1);
 
-            Assert.That(applicationDbContext.Recipes.Count(), Is.EqualTo(0));
+            Assert.That(applicationDbContext.Recipes.Count(), Is.EqualTo(1));
 
             var result = await applicationDbContext.Recipes.Where(d => d.Id == 1).FirstOrDefaultAsync();
 
             Assert.That(result, Is.Null);
+
+        }
+
+
+        [Test]
+
+        public async Task GetAllRecipesTest()
+        {
+            RecipeViewModel model = new RecipeViewModel()
+            {
+                Name = "Test",
+                Description = "Test Description",
+                ImageUrl = "",
+            };
+
+            await admineRecipeService.AddRecipes(model);
+
+             model = new RecipeViewModel()
+            {
+                Name = "Test2",
+                Description = "Test Description2",
+                ImageUrl = "",
+            };
+            await admineRecipeService.AddRecipes(model);
+
+            Assert.That(applicationDbContext.Recipes.Count(), Is.EqualTo(2));
+            var result = await recipeService.GetAllRecipes();
+
+            Assert.That(result.Count, Is.EqualTo(2));
+
+        }
+
+        [Test]
+        public async Task GetAllSpicesTest()
+        {
+            var result = await recipeService.GetAllSpices();
+
+            Assert.That(result.Count, Is.EqualTo(5));
+
+        }
+
+        [Test]
+        public async Task GetAllIngredientsTest()
+        {
+            var result = await recipeService.GetAllIngredients();
+
+            Assert.That(result.Count, Is.EqualTo(2));
+
+        }
+
+
+        [Test]
+        public async Task GetRecipeTest()
+        {
+            RecipeViewModel model = new RecipeViewModel()
+            {
+                Name = "Test",
+                Description = "Test Description",
+                ImageUrl = "",
+            };
+
+            await admineRecipeService.AddRecipes(model);
+
+            var result = await recipeService.GetRecipe(1);
+
+            Assert.That(result.Name, Is.EqualTo("Test"));
+            Assert.That(result.Description, Is.EqualTo("Test Description"));
 
         }
 
