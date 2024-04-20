@@ -9,7 +9,7 @@ namespace Mezeta.Core.Services
     public class RecipeService : IRecipeService
     {
         private readonly ApplicationDbContext data;
-        private static readonly List<RecipePrepairViewModel> prepairsList = new List<RecipePrepairViewModel>();
+        //private static readonly List<RecipePrepairViewModel> prepairsList = new List<RecipePrepairViewModel>();
 
         public RecipeService(ApplicationDbContext _data)
         {
