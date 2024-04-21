@@ -1,6 +1,8 @@
 ﻿using Mezeta.Core.Contracts;
+using Mezeta.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 
 namespace Mezeta.Controllers
@@ -33,11 +35,18 @@ namespace Mezeta.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> AllRecipes()
+        public async Task<IActionResult> AllRecipes(int page=1, string sorting = "Newest")
         {
             var allRecipies =  await recipeService.GetAllRecipes();
+            var recipePageView = new PagesViewModel()
+            {
+                RecipePerPage = 2,
+                Recipes = allRecipies,
+                CurrentPage = page,
+                Sorting = sorting
+            };
 
-            return View(allRecipies);
+            return View(recipePageView);
         }
 
         /// <summary>
