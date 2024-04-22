@@ -5,8 +5,7 @@
     ViewData["Title"] = "Log in";
 }
 
-<section class="vh-100" style="background-color: #282727;
-};">
+<section class="vh-100">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-xl-10">
@@ -52,7 +51,6 @@
                                         <button id="login-submit" class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
                                     </div>
 
-                                    <a id="forgot-password" asp-page="./ForgotPassword" class="small text-muted">Forgot password?</a>
                                     <p class="mb-5 pb-lg-2" style="color: #393f81;">
                                         Don't have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"
                                                                   style="color: #393f81;">Register here</a>

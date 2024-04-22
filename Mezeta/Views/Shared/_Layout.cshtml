@@ -4,41 +4,41 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Mezeta</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Mezeta.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<body style="background-image: url(https://img.freepik.com/free-photo/top-view-selection-pork-meat-table_23-2148439443.jpg?t=st=1713792940~exp=1713796540~hmac=8f4b040d643c44eca2abe58d5cecf188a34c94221302f871df2a5301db32dbaa&w=1380); background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
+    <header >
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm opacity-75 bg-black box-shadow mb-3" >
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mezeta</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Mezeta</a>
+                <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                         </li>
 
                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Home" asp-controller="Main" asp-action="AllRecipes" class="btn btn-outline-primary">Рецепти</a>
+                            <a class="nav-link text-light" asp-area="Home" asp-controller="Main" asp-action="AllRecipes" class="btn btn-outline-primary">Рецепти</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Home" asp-controller="Main" asp-action="AllIngredients" class="btn btn-outline-primary">Продукти</a>
+                            <a class="nav-link text-light" asp-area="Home" asp-controller="Main" asp-action="AllIngredients" class="btn btn-outline-primary">Продукти</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Home" asp-controller="Main" asp-action="AllSpices" class="btn btn-outline-primary">Подправки</a>
+                            <a class="nav-link text-light" asp-area="Home" asp-controller="Main" asp-action="AllSpices" class="btn btn-outline-primary">Подправки</a>
                         </li>
 
 
                         @if (this.User.Identity?.IsAuthenticated == true && this.User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Main" asp-action="All">Админ. портал</a>
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Main" asp-action="All">Админ. портал</a>
                             </li>
                         }
                     </ul>
@@ -73,9 +73,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Mezeta - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer text-muted opacity-50 bg-black">
+        <div class="container tect-light">
+            &copy; @DateTime.Now.Year - Mezeta
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
