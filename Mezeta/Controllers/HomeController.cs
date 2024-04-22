@@ -10,7 +10,7 @@ namespace Mezeta.Controllers
         }
 
         /// <summary>
-        /// Обща информация- начална страница за не логнати потребители
+        /// Обща информация - начална страница за не логнати потребители
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
