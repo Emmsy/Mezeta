@@ -14,9 +14,17 @@
         @foreach (var prep in Model)
         {
 
-            <div class="card col-4" style="width: 50%;">
-                <img class="card-img-top"
-                     src="@prep.Recipe.ImageUrl" alt="Recipe Image">
+            <div class="card opacity-75 bg-black" style="width: 45%;">
+                @if (string.IsNullOrEmpty(prep.Recipe.ImageUrl))
+                {
+                    <img class="card-img-top"
+                         src="https://img.freepik.com/free-vector/label-design-with-salami_1308-70739.jpg?w=1480&t=st=1713716098~exp=1713716698~hmac=5e6a7b9c5a8d4f0b4eeb70e519d08618ad0dde5c16334fd8938f0143d374e085" alt="Recipe Image">
+                }
+                else
+                {
+                    <img class="card-img-top"
+                         src="@prep.Recipe.ImageUrl" alt="Recipe Image">
+                }
                 <div class="card-body te">
 
                     <h4 class="card-title mt-1">@prep.Recipe.Name</h4>
