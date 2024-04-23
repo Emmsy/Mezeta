@@ -9,21 +9,21 @@
                     @if (Model.Id != 0)
                     {
                         <a asp-area="Admin" asp-route-id="@Model.Id" asp-controller="Edit" asp-action="EditListIngredient"
-                           class="btn btn-outline-primary">Добави/редактирай продуктите за рецептата</a>
+                           class="btn btn-outline-secondary">Добави/редактирай продуктите за рецептата</a>
                         <span asp-validation-for="Ingredients" class="small text-danger"></span>
 
                         <a asp-area="Admin" asp-route-id="@Model.Id" asp-controller="Edit" asp-action="EditListSpice"
-                           class="btn btn-outline-primary">Добави/редактирай подправките за рецептата</a>
+                           class="btn btn-outline-secondary">Добави/редактирай подправките за рецептата</a>
                         <span asp-validation-for="Spices" class="small text-danger"></span>
                     }
                     else
                     {
                     <a asp-area="Admin" asp-controller="Add" asp-action="AddListIngredient"
-                       class="btn btn-outline-primary">Добави/редактирай продуктите за рецептата</a>
+                       class="btn btn-outline-secondary">Добави/редактирай продуктите за рецептата</a>
                     <span asp-validation-for="Ingredients" class="small text-danger"></span>
 
                     <a asp-area="Admin" asp-controller="Add" asp-action="AddListSpice"
-                       class="btn btn-outline-primary">Добави/редактирай подправките за рецептата</a>
+                       class="btn btn-outline-secondary">Добави/редактирай подправките за рецептата</a>
                     <span asp-validation-for="Spices" class="small text-danger"></span> 
                     }
 
@@ -56,7 +56,7 @@
                     <div class="card">
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
-                                <p>@ing.IngredientName @ing.Quantity @ing.MeasureUnit</p>
+                                <p class="text-dark">@ing.IngredientName @ing.Quantity @ing.MeasureUnit</p>
                             </blockquote>
                         </div>
                     </div>
@@ -72,8 +72,8 @@
                 {
                     <div class="card">
                         <div class="card-body">
-                            <blockquote class="blockquote mb-0">
-                                <p>@sp.SpiceName @sp.Quantity @sp.MeasureUnit</p>
+                            <blockquote class="blockquote mb-0 text-dark">
+                                <p class="text-dark">@sp.SpiceName @sp.Quantity @sp.MeasureUnit</p>
                             </blockquote>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
             }
 
             <div class="text-center">
-                <input class="btn btn-primary mt-3" type="submit" value="Запази рецептата" />
+                <input class="btn btn-secondary mt-3" type="submit" value="Запази рецептата" />
             </div>
         </form>
 

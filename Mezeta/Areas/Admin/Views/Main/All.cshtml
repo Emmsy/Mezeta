@@ -1,23 +1,27 @@
 ﻿
-<div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-       <h1 class="text-center">All view MAIN-administration</h1>
+<div class="container" style="position:absolute; 
+justify-content:center; 
+transform: translate(0%,50%);">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6" style="border-radius:2rem;
+background-color:rgba(170,170,170, 0.4);
+box-shadow: 0px 10px 30px 30px  rgba(170,170,170, 0.4);">
+       <h1 class="text-center">Административен портал</h1>
         <hr />
 
         <div class="card mb-3">
             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                <a asp-area="Admin" asp-controller="Add" asp-action="AddIngredient" class="btn btn-outline-primary">Добави продукт</a>
-                <a asp-area="Admin" asp-controller="Add" asp-action="AddSpice" class="btn btn-outline-primary">Добави подправка</a>
-                <a asp-area="Admin" asp-controller="Add" asp-action="AddRecipe" class="btn btn-outline-primary">Добави рецепта</a>
+                <a asp-area="Admin" asp-controller="Add" asp-action="AddIngredient" class="btn btn-outline-secondary">Добави продукт</a>
+                <a asp-area="Admin" asp-controller="Add" asp-action="AddSpice" class="btn btn-outline-secondary">Добави подправка</a>
+                <a asp-area="Admin" asp-controller="Add" asp-action="AddRecipe" class="btn btn-outline-secondary">Добави рецепта</a>
             </div>
            
         </div>
 
         <div class="card mb-3">
             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                <a asp-area="Home" asp-controller="Main" asp-action="AllIngredients" class="btn btn-outline-primary">Виж всички продукти</a>
-                <a asp-area="Home" asp-controller="Main" asp-action="AllSpices" class="btn btn-outline-primary">Виж всички подправки</a>
-                <a asp-area="Home" asp-controller="Main" asp-action="AllRecipes" class="btn btn-outline-primary">Виж всички рецепти</a>
+                <a asp-area="Home" asp-controller="Main" asp-action="AllIngredients" class="btn btn-outline-secondary">Виж всички продукти</a>
+                <a asp-area="Home" asp-controller="Main" asp-action="AllSpices" class="btn btn-outline-secondary">Виж всички подправки</a>
+                <a asp-area="Home" asp-controller="Main" asp-action="AllRecipes" class="btn btn-outline-secondary">Виж всички рецепти</a>
             </div>
 
         </div>

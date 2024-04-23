@@ -14,7 +14,7 @@ else
         <h2 class="text-center">@ViewData["Title"]</h2>
         <hr />
 
-        <div class="text-center row">
+        <div class="text-center row" style="justify-content:space-between">
             @foreach (var recipe in Model)
             {
 
@@ -22,7 +22,7 @@ else
                     @if (string.IsNullOrEmpty(recipe.ImageUrl))
                     {
                         <img class="card-img-top"
-                             src="https://img.freepik.com/free-vector/label-design-with-salami_1308-70739.jpg?w=1480&t=st=1713716098~exp=1713716698~hmac=5e6a7b9c5a8d4f0b4eeb70e519d08618ad0dde5c16334fd8938f0143d374e085" alt="Recipe Image">
+                             src="../../../../imgs/salamiVector.jpg" alt="Recipe Image">
                     }
                     else
                     {
@@ -53,11 +53,11 @@ else
 
                     <div class="btn-group" style="justify-content: space-around">
                         <form class="input-group-sm" asp-route-recipeId="@recipe.Id" asp-controller="Main" asp-action="RemoveFromFavorites" method="post">
-                            <input type="submit" value="Remove From Favorites" class="fs-6 btn btn-success mb-3 p-2" />
+                            <input type="submit" value="Премахни от любими" class="fs-6 btn btn-success mb-3 p-2" />
                         </form>
 
                         <form class="input-group-sm" asp-route-id="@recipe.Id" asp-controller="Calculation" asp-action="CalculationsRecipe" method="get">
-                            <input type="submit" value="Add to Prepairing" class="fs-6 btn btn-success mb-3 p-2" />
+                            <input type="submit" value="Добави в зреещи" class="fs-6 btn btn-success mb-3 p-2" />
                         </form>
 
                     </div>

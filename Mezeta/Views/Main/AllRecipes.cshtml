@@ -20,12 +20,12 @@ else
                 <div class="form-group col-md-4">
 
                     <div class="input-group mb-3" >
-                        <label asp-for="Sorting" class="input-group-text">Сортирай по: </label>
+                        <label asp-for="Sorting" class="input-group-text ">Сортирай по: </label>
                         <select asp-for="Sorting" class="form-control">
                             <option value="Oldest">Най-стари</option>
                             <option value="Newest">Най-нови</option>
                         </select>
-                        <input type="submit" value="Филтър" class="btn btn-outline-primary" />
+                        <input type="submit" value="Филтър" class="btn btn-secondary" />
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@ else
         <nav aria-label="Page navigation example">
             <ul class="pagination" style="justify-content:space-between">
                 <li class="page-item">
-                    <a class="btn btn-outline-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+                    <a class="btn btn-secondary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
                        asp-controller="Main"
                        asp-action="AllRecipes"
                        asp-route-page=@(previousPage)
@@ -60,7 +60,7 @@ else
                 }
 
                 <li class="page-item">
-                    <a class="btn btn-outline-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+                    <a class="btn btn-secondary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
                        asp-controller="Main"
                        asp-action="AllRecipes"
                        asp-route-page=@(Model.CurrentPage+1)

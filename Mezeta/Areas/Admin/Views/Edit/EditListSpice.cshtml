@@ -33,7 +33,7 @@
 
 
         <div class="text-center">
-            <input class="btn btn-primary mt-3" type="submit" value="Добави" />
+            <input class="btn btn-secondary mt-3" type="submit" value="Добави" />
         </div>
 
     </form>
@@ -46,7 +46,7 @@
         {
             <div class="card">
                 <div class="d-inline-flex p-2">
-                    <p>@msg.SpiceName @msg.Quantity @msg.MeasureUnit</p>
+                    <p class="text-dark">@msg.SpiceName @msg.Quantity @msg.MeasureUnit</p>
 
                     <form class="input-group-sm"
                           asp-route-id=@msg.SpiceId
@@ -63,7 +63,7 @@
         <form class="input-group-sm" asp-area="Admin" asp-controller="Edit"
               asp-action="EditRecipe" asp-route-id="" method="get">
             <div class="text-center">
-                <input class="btn btn-primary mt-3" type="submit" value="Запази" />
+                <input class="btn btn-secondary mt-3" type="submit" value="Запази" />
             </div>
         </form>
     }

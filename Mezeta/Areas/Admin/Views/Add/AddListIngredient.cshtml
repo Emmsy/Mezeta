@@ -1,7 +1,7 @@
 ﻿@model IngredientViewModel
 
 
-<div class="form-group">
+<div class="container form-group" style="width: 50%;">
     <form class="input-group-sm" asp-area="Admin" asp-controller="Add"
           asp-action="AddListIngredient" asp-route-id="" method="post">
 
@@ -45,8 +45,8 @@
         @foreach (var msg in Model.AddedIngredients)
         {
             <div class="card">
-                <div class="d-inline-flex p-2">
-                    <p>@msg.IngredientName @msg.Quantity @msg.MeasureUnit</p>
+                <div class="d-inline-flex p-2 justify-content-between ">
+                    <p class="text-dark">@msg.IngredientName @msg.Quantity @msg.MeasureUnit</p>
 
                     <form class="input-group-sm"
                           asp-route-id=@msg.IngredientId
