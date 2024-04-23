@@ -15,16 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="_Imgs\top-view-selection-pork-meat-table.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="_Imgs\top-view-selection-pork-meat-table.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.6" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.6" />
@@ -42,6 +32,12 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\imgs\Img.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
