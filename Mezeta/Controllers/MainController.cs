@@ -123,5 +123,19 @@ namespace Mezeta.Controllers
 
             return RedirectToAction("Favorites", "Main");
         }
+
+
+        /// <summary>
+        /// показва пълно описание и съдържание на конкретна рецепта
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int id)
+        {
+          
+            var model = await recipeService.GetRecipe(id);
+            return View(model);
+        }
     }
 }

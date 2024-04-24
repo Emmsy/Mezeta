@@ -1,0 +1,70 @@
+﻿@model RecipeViewModel
+
+@{
+    ViewData["Title"] = "Детайли";
+
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<div class="text-center row" style="justify-content: space-evenly;">
+    <div class="card opacity-75 bg-black" style="width: 45%;">
+
+        @if (string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img class="card-img-top"
+                 src="../../../../imgs/salamiVector.jpg" alt="Recipe Image">
+        }
+        else
+        {
+            <img class="card-img-top"
+                 src="@Model.ImageUrl" alt="Recipe Image">
+        }
+
+        <div class="card-body">
+
+            <h4 class="card-title mt-1">@Model.Name</h4>
+            <hr />
+            <h5>Необходими продукти: </h5>
+            @foreach (var ing in Model.Ingredients)
+            {
+                <p>@ing.IngredientName : @Math.Round(ing.Quantity, 2) @ing.MeasureUnit</p>
+
+            }
+
+            @foreach (var sp in Model.Spices)
+            {
+                <p>@sp.SpiceName : @Math.Round(sp.Quantity, 2) @sp.MeasureUnit</p>
+
+            }
+            <br />
+            <h5 class="mb-0 card-text">Начин на приготвяне:</h5>
+            <br />
+            <p class="mb-0"> @Model.Description</p>
+        </div>
+
+        <div class="btn-group" style="justify-content: space-around">
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form class="input-group-sm" asp-route-recipeId="@Model.Id" asp-controller="Main" asp-action="AddToFavorites" method="post">
+                    <input type="submit" value="Добави в любими" class="fs-6 btn btn-success md-3 p-2" />
+                </form>
+
+                <form class="input-group-sm" asp-route-id="@Model.Id" asp-controller="Calculation" asp-action="CalculationsRecipe" method="get">
+                    <input type="submit" value="Добави в зреещи" class="fs-6 btn btn-success mb-3 p-2" />
+                </form>
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                <form class="input-group-sm" asp-route-id="@Model.Id" asp-area="Admin" asp-controller="Edit" asp-action="EditRecipe" method="get">
+                    <input type="submit" value="Редактирай" class="fs-6 btn btn-warning mb-3 p-2" />
+                </form>
+
+                <form class="input-group-sm" asp-route-id="@Model.Id" asp-area="Admin" asp-controller="Delete" asp-action="DeleteRecipe" method="post"
+                      onclick="return confirm('Are you sure you want to delete this?')">
+                    <input type="submit" value="Изтрий" class="fs-6 btn btn-danger mb-3 p-2" />
+                </form>
+            }
+        </div>
+    </div>
+</div>
